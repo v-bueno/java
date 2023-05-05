@@ -2,6 +2,7 @@ import java.util.Objects;
 import java.lang.Math;
 
 import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 
 public class Segment2D {
 
@@ -10,7 +11,7 @@ public class Segment2D {
     private Point2D B;
 
     public double norme(){
-        return pow(pow((A.getX()-B.getX()),2)+pow((A.getY()-B.getY()),2),1/2);
+        return sqrt(pow((A.getX()-B.getX()),2)+pow((A.getY()-B.getY()),2));
     }
     public Point2D getA() {
         return A;

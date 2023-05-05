@@ -1,6 +1,7 @@
 import java.security.PublicKey;
 import java.util.Objects;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 
 public class Triangle2D {
@@ -21,7 +22,17 @@ public class Triangle2D {
             C = c;
         }
     }
+    public double aire(){
+        double xA = A.getX();
+        double xB = B.getX();
+        double xC = C.getX();
+        double yA = A.getY();
+        double yB = B.getY();
+        double yC = C.getY();
 
+        return 0.5*abs((xB-xA)*(yC-yA)-(xC-xA)*(yB-yA));
+
+    }
     public boolean estIsocele(){
         Segment2D AB = new Segment2D(A,B);
         Segment2D BC = new Segment2D(B,C);

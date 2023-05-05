@@ -1,10 +1,10 @@
 public class Point2D {
 
-    private int x;
+    private double x;
 
-    private int y;
+    private double y;
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
@@ -12,7 +12,7 @@ public class Point2D {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 

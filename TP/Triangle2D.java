@@ -12,9 +12,12 @@ public class Triangle2D {
 
     public Point2D C;
 
-    public Triangle2D(Point2D a, Point2D b, Point2D c) {
-        if(a.equals(b)||a.equals(c)||c.equals(a)){
-            System.err.println("2 points se superposent.");
+    public Triangle2D(Point2D a, Point2D b, Point2D c) throws PtsProches{
+        Segment2D ab = new Segment2D(a,b);
+        Segment2D bc = new Segment2D(b,c);
+        Segment2D ca = new Segment2D(c,a);
+        if (ab.norme()<1|bc.norme()<1|ca.norme()<1){
+            throw new PtsProches(ab,bc,ca);
         }
         else {
             A = a;

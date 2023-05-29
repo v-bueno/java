@@ -48,25 +48,26 @@ public class JeuSolo implements Graphique, ActionListener  {
         gbc.gridy=0;
         gbc.gridwidth=2;
         panel.add(labelQuestion,gbc);
-        gbc.gridwidth=1;
-        gbc.gridheight=1;
+
         gbc.gridx=0;
         gbc.gridy=2;
         panel.add(bouton1,gbc);
-        gbc.gridx=1;
-        gbc.gridy=2;
+        gbc.gridx=0;
+        gbc.gridy=3;
+        gbc.insets=new Insets(0,0,0,0);
         panel.add(bouton2,gbc);
         gbc.gridx=0;
-        gbc.gridy=3;
+        gbc.gridy=4;
         panel.add(bouton3,gbc);
-        gbc.gridx=1;
-        gbc.gridy=3;
+        gbc.gridx=0;
+        gbc.gridy=5;
         panel.add(bouton4,gbc);
         gbc.gridx=0;
-        gbc.gridy=4;
+        gbc.gridy=6;
+        gbc.insets=new Insets(25,0,0,0);
         panel.add(labelScore,gbc);
-        gbc.gridx=1;
-        gbc.gridy=4;
+        gbc.gridx=0;
+        gbc.gridy=7;
 
         panel.add(labelBonneReponse,gbc);
 

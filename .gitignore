@@ -2,3 +2,5 @@
 *.xml
 Projet/.idea/
 .idea/
+out/
+Projet/out/

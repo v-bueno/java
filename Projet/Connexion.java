@@ -150,6 +150,7 @@ public class Connexion implements Graphique{
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
+
             }
         });
     }

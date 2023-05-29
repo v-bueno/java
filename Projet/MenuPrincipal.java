@@ -20,6 +20,7 @@ public class MenuPrincipal implements Graphique{
         JButton jeuSolo = new JButton("Jeu solo");
         JButton jeuDuo = new JButton("Jeu duo");
         JButton espaceAdministrateur = new JButton("Espace Admin");
+        JButton deconnexion=new JButton("Déconnexion");
         JLabel label= new JLabel("Historique de vos parties");
         JLabel label10Derniere=new JLabel("10 dernières parties");
         JButton rejouer=new JButton("Rejouer avec les mêmes paramètres");
@@ -80,12 +81,31 @@ public class MenuPrincipal implements Graphique{
             }
         });
 
+        jeuDuo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChoixJeuDuo();
+                CARD.show(CONTAINER,"ChoixJeuDuo");
+            }
+        });
 
         espaceAdministrateur.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 labelErreur.setVisible(false);
                 new EspaceAdministrateur();
                 CARD.show(CONTAINER, "espaceadmin");
+            }
+        });
+
+        deconnexion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new Connexion();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                CARD.show(CONTAINER,"connexion");
             }
         });
 
@@ -107,7 +127,7 @@ public class MenuPrincipal implements Graphique{
 
         gbc.gridx=3;
         gbc.gridy=0;
-        menuprincipal.add(new JButton("Déconnexion"),gbc);
+        menuprincipal.add(deconnexion,gbc);
 
         gbc.insets=new Insets(15,0,0,0);
 

@@ -11,6 +11,7 @@ public class Connexion implements Graphique{
 
         //On définie les paramètres de la fenêtre
         FRAME.setSize(600,600);
+        FRAME.setPreferredSize(new Dimension(600,600));
         FRAME.setVisible(true);
         FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         FRAME.setLocationRelativeTo(null);
@@ -19,16 +20,36 @@ public class Connexion implements Graphique{
         JMenu partieSolo=new JMenu("Partie Solo");
         JMenu partieDuo=new JMenu("Partie Duo");
         JMenu aide=new JMenu("Aide");
+        JMenuItem jouerSolo=new JMenuItem("Jouer");
+        JMenuItem jouerDuo=new JMenuItem("Jouer");
         JMenuItem menuprincipal=new JMenuItem("Menu principal");
         JMenuItem deconnexion=new JMenuItem("Se déconnecter");
         JMenuBar menuBar=new JMenuBar();
         menuBar.add(partieSolo);
         menuBar.add(partieDuo);
         menuBar.add(aide);
+        partieSolo.add(jouerSolo);
+        partieDuo.add(jouerDuo);
         aide.add(menuprincipal);
         aide.add(deconnexion);
         FRAME.setJMenuBar(menuBar);
         menuBar.setVisible(false); // Ce menu est invisible tant que l'utilisateur n'est pas connecté
+
+        jouerSolo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChoixJeuSolo();
+                CARD.show(CONTAINER,"choixjeu");
+            }
+        });
+
+        jouerDuo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChoixJeuDuo();
+                CARD.show(CONTAINER,"ChoixJeuDuo");
+            }
+        });
 
         //Le JMenuItem menuprincipal permet de revenir au menu principal
         menuprincipal.addActionListener(new ActionListener() {
@@ -150,7 +171,6 @@ public class Connexion implements Graphique{
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
-
             }
         });
     }

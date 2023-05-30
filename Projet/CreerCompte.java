@@ -23,12 +23,9 @@ public class CreerCompte implements Serializable, Graphique {
         JLabel passwordlabel = new JLabel("Mot de passe");
         JButton btn = new JButton("Créer le compte");
         JButton annuler=new JButton("Annuler");
-        JLabel court=new JLabel("Identifiant et mot de passe doivent avoir 4 caractères ou plus");
-        court.setForeground(Color.red);
-        JLabel existedeja = new JLabel("Identifiant existe déjà");
-        existedeja.setForeground(Color.red);
-        court.setVisible(false);
-        existedeja.setVisible(false);
+        JLabel labelErreur = new JLabel();
+        labelErreur.setForeground(Color.red);
+
 
         //On instancie un JPanel afin d'y ranger tous les composants
         JPanel panel = new JPanel(new GridBagLayout());
@@ -57,10 +54,8 @@ public class CreerCompte implements Serializable, Graphique {
         panel.add(annuler,gbc);
         gbc.gridx=0;
         gbc.gridy=6;
-        panel.add(court,gbc);
-        gbc.gridx=0;
-        gbc.gridy=6;
-        panel.add(existedeja,gbc);
+        panel.add(labelErreur,gbc);
+
 
         CONTAINER.add(panel, "creercompte"); //Ajoute la mise en page du panel dans le container
 
@@ -79,23 +74,20 @@ public class CreerCompte implements Serializable, Graphique {
                     int length = passwordField.getPassword().length; //longueur du mot de passe
                     if(identifiant.length()<=3||length<=3) {//identifiant et mot de passe ont plus de 3 caractères
                         //Affiche le message d'erreur associé
-                        court.setVisible(true);
-                        existedeja.setVisible(false);
+                        labelErreur.setText("Identifiant et mot de passe doivent faire plus de 3 caractères");
                     } else if (!file.exists()) { //si le fichier n'existe pas
                         compte.setType("Administrateur");
                         compte.serialiser(); //on sérialise le compte en tant qu'administrateur (car c'est le premier compte)
                         CARD.show(CONTAINER, "connexion");//affiche la page de connexion
                     } else if(compte.verifieIdentifiant()){//identifiant existe déjà pour un autre compte
                         //Affiche le message d'erreur associé
-                        existedeja.setVisible(true);
-                        court.setVisible(false);
+                        labelErreur.setText("Identifiant déjà existant");
                     }
                     else{
                         compte.serialiser(); // sérialise le compte
                         CARD.show(CONTAINER, "connexion"); //Affiche la page de connexion
                         //Enlève les messages d'erreurs
-                        existedeja.setVisible(false);
-                        court.setVisible(false);
+                        labelErreur.setVisible(false);
                     }
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);

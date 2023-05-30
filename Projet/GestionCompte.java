@@ -19,19 +19,23 @@ public class GestionCompte implements Graphique{
      * @throws ClassNotFoundException
      */
     GestionCompte() throws IOException, ClassNotFoundException {
+
+        //Instancie les 3 boutons de la page
         JButton supprimer=new JButton("Supprimer le compte");
         JButton passeradmin=new JButton("Passer le compte en admin");
         JButton suspendre=new JButton("Suspendre le compte");
 
 
-
+        //On instancie la JTable qui contient les informations de tous les comptes
         String[] colonnes= {"Identifiant","Mot de passe","Rôle","Suspendu"};
         DefaultTableModel model= new DefaultTableModel(colonnes,0);
         FileInputStream fis = new FileInputStream("Comptes.data");
         ObjectInputStream ois = new ObjectInputStream(fis);
+        //On récupère la hashmap sérialisée contenant tous les comptes
         HashMap<String,Compte> hashMap = (HashMap<String,Compte>) ois.readObject();
         Compte compte;
-        for (String key : hashMap.keySet()){
+        for (String key : hashMap.keySet()){ //On parcourt toute la hashmap
+            //Pour chaque compte dans la hashmap on ajoute une ligne de tous ces attributs à la JTable
             compte = hashMap.get(key);
             model.addRow(new String[]{compte.getIdentifiant(), compte.getMotdepasse(),compte.getType(),compte.getSuspendu().toString()});
         }
@@ -42,11 +46,15 @@ public class GestionCompte implements Graphique{
                 return false; // Empêche l'édition des cellules
             }
         };
+        JScrollPane scroll = new JScrollPane(table);
+
+        //Instancie un JLabel qui sera le "titre de la page"
         JLabel labelHead=new JLabel("Comptes enregistrés",SwingConstants.CENTER);
         Font customFont=new Font("Serif",Font.BOLD,20);
         labelHead.setFont(customFont);
         labelHead.setForeground(Color.BLUE);
-        JScrollPane scroll = new JScrollPane(table);
+
+        //On place les composants dans un JPanel à l'aide de GridBagLayout
         JPanel panel=new JPanel(new GridBagLayout());
         GridBagConstraints gbc=new GridBagConstraints();
         gbc.fill=GridBagConstraints.HORIZONTAL;
@@ -79,25 +87,30 @@ public class GestionCompte implements Graphique{
         gbc.gridx=0;
         gbc.gridy=5;
         panel.add(labelErreur,gbc);
+
+        //On ajoute cette page au CONTAINER
         CONTAINER.add(panel,"gestioncomptes");
 
-
+        //Compte sélectionné dans la JTable devient administrateur
         passeradmin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (table.getSelectedRowCount() > 1) {
-                    setLabelErreur("Vous ne pouvez modifier qu'un compte à la fois",Color.red);
+                if (table.getSelectedRowCount() != 1) { //s'il y a aucune ou plusieurs lignes sélectionnées
+                    setLabelErreur("Vous ne pouvez modifier qu'un compte à la fois",Color.red);//affiche erreur
                 } else {
-                    int ligne = table.getSelectedRow();
+                    int ligne = table.getSelectedRow();//ligne sélectionnée dans la JTable
+                    //Si le compte n'est pas admin
                     if (!table.getValueAt(ligne, 2).toString().equals("Administrateur")) {
                         String id = table.getValueAt(ligne, 0).toString();
                         String mdp = table.getValueAt(ligne, 1).toString();
+                        //On instancie un compte avec l'identifiant et le mot de passe sélectionnés
                         Compte compte = new Compte(id, mdp);
                         try {
+                            //Récupère le compte correspondant sérialisé
                             Compte correspondant = compte.verifieIdentifiantMotdepasse();
-                            correspondant.setType("Administrateur");
-                            correspondant.supprimer();
+                            correspondant.setType("Administrateur"); //On le passe admin
                             correspondant.serialiser();
+                            //Sérialise avec modification et retourne sur la page admin avec un message de succès
                             new EspaceAdministrateur().setLabelSucces("Compte modifié avec succès !",Color.green);
                             CARD.show(CONTAINER,"espaceadmin");
                         } catch (IOException ex) {
@@ -105,17 +118,19 @@ public class GestionCompte implements Graphique{
                         } catch (ClassNotFoundException ex) {
                             throw new RuntimeException(ex);
                         }
-                    } else {
+                    } else { //Sinon le compte est un admin, on ne peut pas le modifier et on affiche un message d'erreur
                         setLabelErreur("Vous ne pouvez pas modifier le compte d'un admin",Color.red);
                     }
                 }
             }
         });
 
+        /*Supprime le compte sélectionner le compte fonctionne exactement de la même façon que celui d'avant
+         sauf que c'est un appel à une méthode de la classe compte différent*/
         supprimer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (table.getSelectedRowCount() > 1) {
+                if (table.getSelectedRowCount() != 1) {
                     setLabelErreur("Vous ne pouvez modifier qu'un compte à la fois",Color.red);
                 } else {
                     int ligne = table.getSelectedRow();
@@ -138,6 +153,8 @@ public class GestionCompte implements Graphique{
             }
         });
 
+        /*Suspend le compte sélectionner le compte fonctionne exactement de la même façon que celui d'avant
+         sauf que c'est un appel à une méthode de la classe compte différent*/
         suspendre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -166,6 +183,7 @@ public class GestionCompte implements Graphique{
             }
         });
     }
+    //Modifie le labelErreur
     public void setLabelErreur(String text,Color color){
         labelErreur.setText(text);
         labelErreur.setForeground(color);

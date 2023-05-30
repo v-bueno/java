@@ -19,6 +19,7 @@ public class NouvelleQuestion extends JFrame implements Graphique{
      */
     NouvelleQuestion(){
 
+        //Instancie les composants dont nous allons avoiir besoin
         String[] difficultes ={"Facile","Normal","Difficile"};
         String[] themes ={"Sport","Musique","Géographie","Cinéma"};
         String[] entierreponse={"1","2","3","4"};
@@ -50,7 +51,7 @@ public class NouvelleQuestion extends JFrame implements Graphique{
         labelErreur.setVisible(false);
         JButton valider=new JButton("Valider");
 
-
+        //On place les composants à l'endroit voulu sur le JPanel à l'aide du GridBagLayout
         JPanel  themePanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -136,11 +137,13 @@ public class NouvelleQuestion extends JFrame implements Graphique{
         gbc.fill=GridBagConstraints.CENTER;
         themePanel.add(labelErreur,gbc);
 
-        CONTAINER.add("ajouterquestion",themePanel);
+        CONTAINER.add("ajouterquestion",themePanel); //Ajoute la page au CONTAINER
 
+        //Ajoute la question au csv quand on appuie sur le bouton
         valider.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //On récupère dans des variables toutes les informations des composants
                 String theme=(String) themecombobox.getSelectedItem();
                 String difficulte= (String) difficultecombobox.getSelectedItem();
                 String enonce = questionField.getText();
@@ -150,16 +153,19 @@ public class NouvelleQuestion extends JFrame implements Graphique{
                 int malus=Integer.parseInt((String) maluscombobox.getSelectedItem());
                 int temps=Integer.parseInt((String) tempscombobox.getSelectedItem());
                 if(enonce.length()<4||reponses[0].length()<4||reponses[1].length()<4||reponses[2].length()<4||reponses[3].length()<4) {
-                    labelErreur.setVisible(true);
+                    labelErreur.setVisible(true); //affiche message d'erreur
                 }else{
+                    //Affiche la page d'espace admin avec un message de succès
                     new EspaceAdministrateur().setLabelSucces("Question ajoutée avec succès !",Color.green);
                     CARD.show(CONTAINER,"espaceadmin");
+                    //Ajoute la question avec les paramètres au CSV
                     Question question = new Question(enonce, reponses, theme, difficulte, temps, points, entier, malus);
                     question.ajouteCSV();
                 }
             }
         });
 
+        //Retourne au menu principal
         retour.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -1,3 +1,7 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +16,7 @@ import java.util.Arrays;
  *
  */
 public class FinJeu implements Graphique {
+    Clip clip;
     /**
      *
      * @param score
@@ -30,6 +35,7 @@ public class FinJeu implements Graphique {
             public void actionPerformed(ActionEvent e) {
                 try {
                     new MenuPrincipal();
+                    clip.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -40,6 +46,7 @@ public class FinJeu implements Graphique {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ChoixJeuSolo().lanceJeu(new ArrayList<>(Arrays.asList(partie.getTheme())),partie.getDifficulte(),partie.getNombrequestions());
+                clip.close();
             }
         });
 
@@ -95,6 +102,20 @@ public class FinJeu implements Graphique {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void joueSon(){
+        File file= new File("Sound.wav");
+        try {
+            AudioInputStream ais= AudioSystem.getAudioInputStream(file);
+            clip= AudioSystem.getClip();
+            clip.open(ais);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
         }
     }
 }

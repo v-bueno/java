@@ -46,15 +46,15 @@ public class Connexion implements Graphique{
 
             public void actionPerformed(ActionEvent e) {
                 new ChoixJeuSolo();
-                CARD.show(CONTAINER,"choixjeu");
+                CARD.show(CONTAINER,"choixjeu"); //Affiche la page "choixjeu" créée grâce au constructeur
             }
         });
 
         jouerDuo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new ChoixJeuDuo();
-                CARD.show(CONTAINER,"ChoixJeuDuo");
+                new ChoixJeuMulti();
+                CARD.show(CONTAINER,"choixjeumulti"); //Affiche la page "choixjeumulti" créée grâce au constructeur
             }
         });
 
@@ -65,6 +65,7 @@ public class Connexion implements Graphique{
                 CARD.show(CONTAINER,"menuprincipal");
             }
         });
+
         //Le JMenuItem deconnexion permet de se déconnecter
         deconnexion.addActionListener(new ActionListener() {
             @Override

@@ -46,6 +46,7 @@ public class EspaceAdministrateur implements Graphique{
             }
         });
 
+        //Bouton permet de revenir sur la page du Menu principal
         menuPrincipal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

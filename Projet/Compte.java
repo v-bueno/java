@@ -167,16 +167,18 @@ public class Compte implements Serializable {
      */
     public void serialiser() throws IOException, ClassNotFoundException {
         File file= new File("Comptes.data");
-        HashMap<String,Compte> hashMap;
+        HashMap<String,Compte> hashMap; //Initialise une hashmap de Compte, la clé correspondra à l'identifiant du compte
+        //si le fichier existe on récupère la hashmap sérialisé et on y met le compte
         if(file.exists()){
             FileInputStream fis=new FileInputStream(file);
             ObjectInputStream ois= new ObjectInputStream(fis);
             hashMap=(HashMap<String,Compte>) ois.readObject();
             hashMap.put(this.getIdentifiant(),this);
-        }else{
+        }else{ //Sinon on instancie une nouvelle hashmap et on y met le compte
              hashMap=new HashMap<>();
              hashMap.put(this.getIdentifiant(),this);
         }
+        //On sérialise la nouvelle hashmap dans le fichier
         FileOutputStream fos=new FileOutputStream(file);
         ObjectOutputStream oos=new ObjectOutputStream(fos);
         oos.writeObject(hashMap);
@@ -207,7 +209,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return Indique si il y a un Compte dans Compte.data qui possède déjà cet identifiant.
+     * @return Indique si il y a un Compte dans Comptes.data qui possède déjà cet identifiant.
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -230,11 +232,11 @@ public class Compte implements Serializable {
     public void supprimer() throws IOException, ClassNotFoundException {
         FileInputStream fis= new FileInputStream("Comptes.data");
         ObjectInputStream ois=new ObjectInputStream(fis);
-        HashMap<String,Compte> hashMap= (HashMap<String,Compte>) ois.readObject();
-        hashMap.remove(this.getIdentifiant());
+        HashMap<String,Compte> hashMap= (HashMap<String,Compte>) ois.readObject(); //récupère la hashmap sérialisée
+        hashMap.remove(this.getIdentifiant()); //retire le compte correspondant à l'identifiant
         FileOutputStream fos= new FileOutputStream("Comptes.data");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(hashMap);
+        oos.writeObject(hashMap); //sérialise la nouvelle hashmap
     }
 
     /**
@@ -245,12 +247,12 @@ public class Compte implements Serializable {
     public void suspendre() throws IOException, ClassNotFoundException {
         FileInputStream fis= new FileInputStream("Comptes.data");
         ObjectInputStream ois=new ObjectInputStream(fis);
-        HashMap<String,Compte> hashMap= (HashMap<String,Compte>) ois.readObject();
-        Compte compte = hashMap.get(this.getIdentifiant());
-        compte.setSuspendu(!compte.getSuspendu());
+        HashMap<String,Compte> hashMap= (HashMap<String,Compte>) ois.readObject();//Récupère la hashmap sérialisée
+        Compte compte = hashMap.get(this.getIdentifiant());//Récupère le compte avec le bon identifiant
+        compte.setSuspendu(!compte.getSuspendu());//Inverse la valeur du booléen suspendu
         FileOutputStream fos= new FileOutputStream("Comptes.data");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(hashMap);
+        oos.writeObject(hashMap);//Sérialise la hasmap avec le compte modifié
     }
 
     /**

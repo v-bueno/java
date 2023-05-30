@@ -15,11 +15,19 @@ public class FinJeuMulti implements Graphique{
     int scoreA;
     int scoreB;
 
-    FinJeuMulti(int scoreA, int scoreB) throws IOException, ClassNotFoundException {
+    FinJeuMulti(int scoreA, int scoreB,int version) throws IOException, ClassNotFoundException {
         this.scoreA = scoreA;
         this.scoreB = scoreB;
-
-        JLabel label = new JLabel("FIN ! Le score de l'équipe A est " + scoreA+" et le score de l'équipe B est "+scoreB);
+        JLabel label;
+        if (scoreA<scoreB) {
+            label = new JLabel("FIN ! L'équipe B l'emporte !");
+        }
+        else if (scoreA>scoreB) {
+            label = new JLabel("FIN ! L'équipe A l'emporte !");
+        }
+        else {
+            label = new JLabel("FIN ! Les 2 équipes sont ex aequo !");
+        }
         JButton rejouer = new JButton("Rejouer");
         JButton menuPrincipal = new JButton("Menu Principal");
         Connexion.compteUtilise.serialiser();
@@ -41,8 +49,15 @@ public class FinJeuMulti implements Graphique{
         rejouer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ChoixJeuMulti().lanceJeu(new ArrayList<>(Arrays.asList(partie.getTheme())), partie.getDifficulte(), partie.getNombrequestions());
-                clip.close();
+                if (version == 1) {
+                    new ChoixJeuMulti().lanceJeuV1(new ArrayList<>(Arrays.asList(partie.getTheme())), partie.getDifficulte(), partie.getNombrequestions());
+                    clip.close();
+                }
+                else{
+                    new ChoixJeuMulti().lanceJeuV2(new ArrayList<>(Arrays.asList(partie.getTheme())), partie.getDifficulte(), partie.getNombrequestions());
+                    clip.close();
+
+                }
             }
         });
 

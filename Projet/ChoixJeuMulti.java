@@ -23,7 +23,8 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
 
 
     JComboBox nombrequestioncombobox= new JComboBox(init);
-    JButton jouer = new JButton("Jouer !");
+    JButton jouerV1 = new JButton("Jouer à la V1!");
+    JButton jouerV2 = new JButton("Jouer à la V2!");
     JLabel labelnombrequestion;
     JLabel labelErreur = new JLabel("Sélectionnez un nombre");
 
@@ -70,11 +71,11 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         gbc.gridy=8;
         panel.add(nombrequestioncombobox,gbc);
         gbc.insets=new Insets(15,0,0,0);
-
         gbc.gridx=0;
         gbc.gridy=9;
-        panel.add(jouer,gbc);
-
+        panel.add(jouerV1,gbc);
+        gbc.gridx=1;
+        panel.add(jouerV2,gbc);
         gbc.gridx=0;
         gbc.gridy=10;
         panel.add(labelErreur,gbc);
@@ -85,7 +86,7 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         theme3.addActionListener(this);
         theme4.addActionListener(this);
         difficultecombobox.addActionListener(this);
-        jouer.addActionListener(new ActionListener() {
+        jouerV1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(((String)nombrequestioncombobox.getSelectedItem()).equals("Aucune")) {
@@ -99,13 +100,29 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
                     }
                     int nombrequestions = (Integer.parseInt((String) nombrequestioncombobox.getSelectedItem()));
                     String difficulte = (String) difficultecombobox.getSelectedItem();
-                    lanceJeu(themeselectionnes, difficulte, nombrequestions);
+                    lanceJeuV1(themeselectionnes, difficulte, nombrequestions);
                 }
             }
         });
 
-
-
+        jouerV2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(((String)nombrequestioncombobox.getSelectedItem()).equals("Aucune")) {
+                    labelErreur.setVisible(true);
+                }else {
+                    ArrayList<String> themeselectionnes = new ArrayList<>();
+                    for (JCheckBox theme : themes) {
+                        if (theme.isSelected()) {
+                            themeselectionnes.add(theme.getText());
+                        }
+                    }
+                    int nombrequestions = (Integer.parseInt((String) nombrequestioncombobox.getSelectedItem()));
+                    String difficulte = (String) difficultecombobox.getSelectedItem();
+                    lanceJeuV2(themeselectionnes, difficulte, nombrequestions);
+                }
+            }
+        });
 
     }
     public void actionPerformed(ActionEvent e){
@@ -156,8 +173,31 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         }
         return listequestion;
     }
-
-    public void lanceJeu(ArrayList<String> themes,String difficulte,int nombrequestions){
+    public void lanceJeuV1(ArrayList<String> themes,String difficulte,int nombrequestions){
+        ArrayList<Question> listequestion = new ArrayList<>();
+        Iterator<String> iterator = themes.iterator();
+        while (iterator.hasNext()) {
+            String theme = iterator.next();
+            try {
+                ArrayList<Question> temporaire = lisCSV(theme, difficulte);
+                listequestion.addAll(temporaire);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        Collections.shuffle(listequestion);
+        List<Question> sublistA = listequestion.subList(0, nombrequestions);
+        ArrayList<Question> nouvellelisteA = new ArrayList<>(sublistA);
+        Collections.shuffle(listequestion);
+        List<Question> sublistB = listequestion.subList(0, nombrequestions);
+        ArrayList<Question> nouvellelisteB = new ArrayList<>(sublistB);
+        String[] themesjeu = new String[themes.size()];
+        themes.toArray(themesjeu);
+        Partie partie = new Partie("Jeu Duo", difficulte, themesjeu, nombrequestions);
+        new JeuMultiv1(nouvellelisteA,nouvellelisteB, 0, 0,false,false,0,"",partie);
+        CARD.show(CONTAINER, "JeuMulti");
+    }
+    public void lanceJeuV2(ArrayList<String> themes,String difficulte,int nombrequestions){
         ArrayList<Question> listequestion = new ArrayList<>();
         Iterator<String> iterator = themes.iterator();
         while (iterator.hasNext()) {
@@ -175,7 +215,7 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         String[] themesjeu = new String[themes.size()];
         themes.toArray(themesjeu);
         Partie partie = new Partie("Jeu Duo", difficulte, themesjeu, nombrequestions);
-        new JeuMultiv1(nouvelleliste, 0, 0,0,"",partie);
+        new JeuMultiv2(nouvelleliste, 0, 0,0,"",partie);
         CARD.show(CONTAINER, "JeuMulti");
     }
 

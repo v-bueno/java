@@ -1,7 +1,4 @@
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +27,7 @@ public class FinJeu implements Graphique {
         Connexion.compteUtilise.serialiser();
         Partie partie=Connexion.compteUtilise.getHistorique().get(Connexion.compteUtilise.getHistorique().size()-1);
         ajouteCSV(Connexion.compteUtilise.getIdentifiant(),partie.getTheme(), partie.getDifficulte(), partie.getNombrequestions(),partie.getScore());
+        joueSon();
         menuPrincipal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,7 +112,7 @@ public class FinJeu implements Graphique {
             clip.start();
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
+        } catch (LineUnavailableException | IOException e) {
             throw new RuntimeException(e);
         }
     }

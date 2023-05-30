@@ -25,7 +25,7 @@ public class JeuSolo implements Graphique, ActionListener  {
     private JLabel labelTempsRestant;
     private Timer chrono;
     private int tempsRestant;
-    ArrayList<Question> listequestions;
+    private ArrayList<Question> listequestions;
     int score2;
     private Partie partiejouee;
 

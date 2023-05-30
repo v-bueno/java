@@ -12,45 +12,19 @@ public class BoutonReponse {
     JButton bouton;
 
     /**
-     *
-     * @param chrono
-     * @param i
-     * @param questions
+     * @param chrono    Timer qui gère le temps restant pour répondre
+     * @param i         numéro du bouton
+     * @param questions liste des questions restantes a jouer.
      */
-    public BoutonReponse(Timer chrono, int i, ArrayList<Question> questions){
+    public BoutonReponse(Timer chrono, int i, ArrayList<Question> questions) {
         this.chrono = chrono;
         this.bouton = new JButton(questions.get(0).getReponses()[i]);
     }
 
     /**
-     *
-     * @return
-     */
-    public Timer getChrono() {
-        return chrono;
-    }
-
-    /**
-     *
-     * @param chrono
-     */
-    public void setChrono(Timer chrono) {
-        this.chrono = chrono;
-    }
-
-    /**
-     *
-     * @return
+     * @return Renvoie le JButton lié à ce BoutonReponse
      */
     public JButton getBouton() {
         return bouton;
-    }
-
-    /**
-     *
-     * @param bouton
-     */
-    public void setBouton(JButton bouton) {
-        this.bouton = bouton;
     }
 }

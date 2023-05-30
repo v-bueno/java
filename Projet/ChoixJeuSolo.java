@@ -11,9 +11,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- *
- */
+
 public class ChoixJeuSolo implements Graphique, ActionListener {
     JCheckBox theme1 = new JCheckBox("Sport");
     JCheckBox theme2 = new JCheckBox("Musique");
@@ -150,9 +148,9 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
 
     /**
      *
-     * @param theme
-     * @param difficulte
-     * @return
+     * @param theme thème dans lequel on doit récupérer les questions.
+     * @param difficulte niveau de difficulté que les questions doivent avoir.
+     * @return Array avec toutes les questions de la difficulté et du thème choisi.
      * @throws IOException
      */
     public ArrayList<Question> lisCSV(String theme,String difficulte) throws IOException {
@@ -174,9 +172,9 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
 
     /**
      *
-     * @param themes
-     * @param difficulte
-     * @param nombrequestions
+     * @param themes Liste des thèmes dans lesquels les questions sont choisies.
+     * @param difficulte niveau de difficulté des questions.
+     * @param nombrequestions nombre de questions jouées.
      */
     public void lanceJeu(ArrayList<String> themes,String difficulte,int nombrequestions){
         ArrayList<Question> listequestion = new ArrayList<>();

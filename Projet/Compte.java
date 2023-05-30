@@ -3,9 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-/**
- *
- */
 public class Compte implements Serializable {
     private String identifiant;
     private String motdepasse;
@@ -15,7 +12,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param identifiant
+     * @param identifiant Identifiant du compte.
      */
     public Compte(String identifiant) {
         this.identifiant = identifiant;
@@ -24,8 +21,8 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param identifiant
-     * @param motdepasse
+     * @param identifiant Identifiant du compte.
+     * @param motdepasse Mot de Passe du compte.
      */
     Compte(String identifiant, String motdepasse) {
         this.identifiant = identifiant;
@@ -35,24 +32,11 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param identifiant
-     * @param motdepasse
-     * @param type
-     */
-    Compte(String identifiant, String motdepasse, String type) {
-        this.identifiant = identifiant;
-        this.motdepasse = motdepasse;
-        this.type = type;
-        this.historique=new ArrayList<>();
-    }
-
-    /**
-     *
-     * @param identifiant
-     * @param motdepasse
-     * @param historique
-     * @param type
-     * @param suspendu
+     * @param identifiant Identifiant du compte.
+     * @param motdepasse Mot de Passe du compte.
+     * @param historique Historique des Parties.
+     * @param type Type de compte admin ou joueur.
+     * @param suspendu Indique si le compte est suspendu ou non.
      */
     public Compte(String identifiant, String motdepasse, ArrayList<Partie> historique, String type, Boolean suspendu) {
         this.identifiant = identifiant;
@@ -66,10 +50,10 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param identifiant
-     * @param motdepasse
-     * @param type
-     * @param suspendu
+     * @param identifiant Identifiant du compte.
+     * @param motdepasse Mot de Passe du compte.
+     * @param type Type de compte admin ou joueur.
+     * @param suspendu Indique si le compte est suspendu.
      */
     public Compte(String identifiant, String motdepasse, String type, Boolean suspendu) {
         this.identifiant = identifiant;
@@ -81,7 +65,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param identifiant
+     * @param identifiant Nouvel Identidiant du compte.
      */
     public void setIdentifiant(String identifiant) {
         this.identifiant = identifiant;
@@ -89,7 +73,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param motdepasse
+     * @param motdepasse Nouveau Mot de Passe du compte.
      */
     public void setMotdepasse(String motdepasse) {
         this.motdepasse = motdepasse;
@@ -97,7 +81,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param historique
+     * @param historique Nouvel Historique du compte.
      */
     public void setHistorique(ArrayList<Partie> historique) {
         this.historique = historique;
@@ -106,7 +90,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param suspendu
+     * @param suspendu Indique si le compte devient suspendu.
      */
     public void setSuspendu(Boolean suspendu) {
         this.suspendu = suspendu;
@@ -114,7 +98,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param type
+     * @param type Nouveau Type de compte.
      */
     public void setType(String type) {
         this.type = type;
@@ -122,7 +106,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Renvoie l'identifiant du compte.
      */
     public String getIdentifiant() {
         return identifiant;
@@ -130,7 +114,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Renvoie le type du compte.
      */
     public String getType() {
         return type;
@@ -138,7 +122,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Renvoie le mot de passe du compte.
      */
     public String getMotdepasse() {
         return motdepasse;
@@ -146,7 +130,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Renvoie l'historique du compte.
      */
     public ArrayList<Partie> getHistorique() {
         return historique;
@@ -154,7 +138,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Indique si le compte est suspendu.
      */
     public Boolean getSuspendu() {
         return suspendu;
@@ -162,7 +146,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Renvoie l'objet convertit en String.
      */
     @Override
     public String toString() {
@@ -203,7 +187,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Renvoie le compte dans Compte.data qui a le même identifiant et mot de passe que celui-ci.
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -223,7 +207,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @return
+     * @return Indique si il y a un Compte dans Compte.data qui possède déjà cet identifiant.
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -271,7 +255,7 @@ public class Compte implements Serializable {
 
     /**
      *
-     * @param partie
+     * @param partie Partie à ajouter dans l'historique.
      */
     public void ajoutePartie(Partie partie){
         this.historique.add(partie);

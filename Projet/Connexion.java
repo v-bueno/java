@@ -185,7 +185,7 @@ public class Connexion implements Graphique{
 
     /**
      *
-     * @param args
+     * @param args entrée données par l'utilisateur.
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {

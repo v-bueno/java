@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ *
+ */
 public class Question {
     private String question;
     private String[] reponses;
@@ -17,7 +20,25 @@ public class Question {
     private int bonnereponse;
     private int malus;
 
-    public Question(String question, String[] reponses, String theme, String difficulte, int temps, int points, int bonnereponse, int malus) {
+    /**
+     *
+     * @param question
+     * @param reponses
+     * @param theme
+     * @param difficulte
+     * @param temps
+     * @param points
+     * @param bonnereponse
+     * @param malus
+     */
+    public Question(String question,
+                    String[] reponses,
+                    String theme,
+                    String difficulte,
+                    int temps,
+                    int points,
+                    int bonnereponse,
+                    int malus) {
         this.question = question;
         this.reponses = reponses;
         this.theme = theme;
@@ -28,6 +49,9 @@ public class Question {
         this.malus = malus;
     }
 
+    /**
+     *
+     */
     public Question() {
     }
 
@@ -95,6 +119,9 @@ public class Question {
         this.malus = malus;
     }
 
+    /**
+     *
+     */
     public void ajouteCSV(){
         try {
             File file= new File("Question.csv");

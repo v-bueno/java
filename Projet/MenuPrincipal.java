@@ -12,8 +12,14 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ */
 public class MenuPrincipal implements Graphique{
-
+    /**
+     *
+     * @throws IOException
+     */
     MenuPrincipal() throws IOException {
 
         //Instancie les composants
@@ -84,7 +90,7 @@ public class MenuPrincipal implements Graphique{
         jeuDuo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ChoixJeuDuo();
+                //new ChoixJeuDuo();
                 CARD.show(CONTAINER,"ChoixJeuDuo");
             }
         });
@@ -171,12 +177,6 @@ public class MenuPrincipal implements Graphique{
         gbc.gridx=2;
         gbc.gridy=4;
         menuprincipal.add(labelErreur,gbc);
-
-
-
-
-
-
 
         //Ajoute le panel au container afin d'afficher cette page quand on le souhaite
         CONTAINER.add(menuprincipal, "menuprincipal");

@@ -8,7 +8,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 
+/**
+ *
+ */
 public class GestionCompte implements Graphique{
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     GestionCompte() throws IOException, ClassNotFoundException {
         JButton supprimer=new JButton("Supprimer le compte");
         JButton passeradmin=new JButton("Passer le compte en admin");

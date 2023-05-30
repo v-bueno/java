@@ -11,6 +11,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *
+ */
 public class ChoixJeuSolo implements Graphique, ActionListener {
     JCheckBox theme1 = new JCheckBox("Sport");
     JCheckBox theme2 = new JCheckBox("Musique");
@@ -30,7 +33,9 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
     JPanel panel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc=new GridBagConstraints();
 
-
+    /**
+     *
+     */
     ChoixJeuSolo() {
         JLabel labeltheme=new JLabel("Cochez les thèmes :");
         JLabel labeldifficulte=new JLabel("Difficulté :");
@@ -85,6 +90,7 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
         theme3.addActionListener(this);
         theme4.addActionListener(this);
         difficultecombobox.addActionListener(this);
+
         jouer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,10 +110,12 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
             }
         });
 
-
-
-
     }
+
+    /**
+     *
+     * @param e the event to be processed
+     */
     public void actionPerformed(ActionEvent e){
         panel.remove(nombrequestioncombobox);
         ArrayList<Question> listequestion=new ArrayList<>();
@@ -140,6 +148,13 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
         CARD.show(CONTAINER,"choixjeu");
     }
 
+    /**
+     *
+     * @param theme
+     * @param difficulte
+     * @return
+     * @throws IOException
+     */
     public ArrayList<Question> lisCSV(String theme,String difficulte) throws IOException {
         FileReader file= new FileReader("Question.csv");
         CSVReader reader= new CSVReader(file);
@@ -157,6 +172,12 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
         return listequestion;
     }
 
+    /**
+     *
+     * @param themes
+     * @param difficulte
+     * @param nombrequestions
+     */
     public void lanceJeu(ArrayList<String> themes,String difficulte,int nombrequestions){
         ArrayList<Question> listequestion = new ArrayList<>();
         Iterator<String> iterator = themes.iterator();

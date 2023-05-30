@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ *
+ */
 public class Compte implements Serializable {
     private String identifiant;
     private String motdepasse;
@@ -10,16 +13,32 @@ public class Compte implements Serializable {
     private String type;
     private Boolean suspendu;
 
+    /**
+     *
+     * @param identifiant
+     */
     public Compte(String identifiant) {
         this.identifiant = identifiant;
         this.historique=new ArrayList<>();
     }
 
+    /**
+     *
+     * @param identifiant
+     * @param motdepasse
+     */
     Compte(String identifiant, String motdepasse) {
         this.identifiant = identifiant;
         this.motdepasse = motdepasse;
         this.historique=new ArrayList<>();
     }
+
+    /**
+     *
+     * @param identifiant
+     * @param motdepasse
+     * @param type
+     */
     Compte(String identifiant, String motdepasse, String type) {
         this.identifiant = identifiant;
         this.motdepasse = motdepasse;
@@ -27,6 +46,14 @@ public class Compte implements Serializable {
         this.historique=new ArrayList<>();
     }
 
+    /**
+     *
+     * @param identifiant
+     * @param motdepasse
+     * @param historique
+     * @param type
+     * @param suspendu
+     */
     public Compte(String identifiant, String motdepasse, ArrayList<Partie> historique, String type, Boolean suspendu) {
         this.identifiant = identifiant;
         this.motdepasse = motdepasse;
@@ -37,7 +64,13 @@ public class Compte implements Serializable {
     }
 
 
-
+    /**
+     *
+     * @param identifiant
+     * @param motdepasse
+     * @param type
+     * @param suspendu
+     */
     public Compte(String identifiant, String motdepasse, String type, Boolean suspendu) {
         this.identifiant = identifiant;
         this.motdepasse = motdepasse;
@@ -46,48 +79,91 @@ public class Compte implements Serializable {
         this.historique=new ArrayList<>();
     }
 
+    /**
+     *
+     * @param identifiant
+     */
     public void setIdentifiant(String identifiant) {
         this.identifiant = identifiant;
     }
 
+    /**
+     *
+     * @param motdepasse
+     */
     public void setMotdepasse(String motdepasse) {
         this.motdepasse = motdepasse;
     }
 
+    /**
+     *
+     * @param historique
+     */
     public void setHistorique(ArrayList<Partie> historique) {
         this.historique = historique;
     }
 
 
-
+    /**
+     *
+     * @param suspendu
+     */
     public void setSuspendu(Boolean suspendu) {
         this.suspendu = suspendu;
     }
 
+    /**
+     *
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIdentifiant() {
         return identifiant;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMotdepasse() {
         return motdepasse;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Partie> getHistorique() {
         return historique;
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getSuspendu() {
         return suspendu;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Compte{" +
@@ -100,8 +176,11 @@ public class Compte implements Serializable {
     }
 
 
-
-
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void serialiser() throws IOException, ClassNotFoundException {
         File file= new File("Comptes.data");
         HashMap<String,Compte> hashMap;
@@ -122,6 +201,12 @@ public class Compte implements Serializable {
         fos.close();
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public Compte verifieIdentifiantMotdepasse() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("Comptes.data");
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -136,6 +221,12 @@ public class Compte implements Serializable {
         return null;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public Boolean verifieIdentifiant() throws IOException,ClassNotFoundException {
         FileInputStream fis = new FileInputStream("Comptes.data");
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -147,9 +238,11 @@ public class Compte implements Serializable {
     }
 
 
-
-
-
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void supprimer() throws IOException, ClassNotFoundException {
         FileInputStream fis= new FileInputStream("Comptes.data");
         ObjectInputStream ois=new ObjectInputStream(fis);
@@ -160,6 +253,11 @@ public class Compte implements Serializable {
         oos.writeObject(hashMap);
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void suspendre() throws IOException, ClassNotFoundException {
         FileInputStream fis= new FileInputStream("Comptes.data");
         ObjectInputStream ois=new ObjectInputStream(fis);
@@ -171,6 +269,10 @@ public class Compte implements Serializable {
         oos.writeObject(hashMap);
     }
 
+    /**
+     *
+     * @param partie
+     */
     public void ajoutePartie(Partie partie){
         this.historique.add(partie);
     }

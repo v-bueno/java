@@ -4,9 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ *
+ */
 public class EspaceAdministrateur implements Graphique{
     private JLabel labelCompte;
     private JLabel labelQuestion;
+
+    /**
+     *
+     */
     EspaceAdministrateur(){
         //Instancie les deux boutons souhaités
         JButton addQuestion=new JButton("Ajouter une question");
@@ -69,10 +76,16 @@ public class EspaceAdministrateur implements Graphique{
         CONTAINER.add("espaceadmin",panel);
     }
 
+    /**
+     *
+     */
     public void visibleLabelCompte(){
         labelCompte.setVisible(true);
     }
 
+    /**
+     *
+     */
     public void visibleLabelQuestion(){
         labelQuestion.setVisible(true);
     }

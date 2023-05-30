@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ *
+ */
 public class JeuSolo implements Graphique, ActionListener  {
     private BoutonReponse bouton1;
     private BoutonReponse bouton2;
@@ -25,6 +28,14 @@ public class JeuSolo implements Graphique, ActionListener  {
     ArrayList<Question> listequestions;
     int score2;
     private Partie partiejouee;
+
+    /**
+     *
+     * @param questions
+     * @param score
+     * @param derniereReponse
+     * @param partie
+     */
     JeuSolo(ArrayList<Question> questions,int score, String derniereReponse,Partie partie) {
 
         chrono = new Timer(true);
@@ -116,6 +127,11 @@ public class JeuSolo implements Graphique, ActionListener  {
         chrono.schedule(timeOutTask,1000,1000);
 
     }
+
+    /**
+     *
+     * @param e the event to be processed
+     */
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==boutons[listequestions.get(0).getBonnereponse()-1].getBouton()){
             if(listequestions.size()==1){

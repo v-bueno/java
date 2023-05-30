@@ -4,9 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+
 public class Connexion implements Graphique{
 
     public static Compte compteUtilise;
+
+    /**
+     *
+     * @throws IOException
+     */
     Connexion() throws IOException {
 
         //On définie les paramètres de la fenêtre
@@ -37,6 +43,7 @@ public class Connexion implements Graphique{
 
         jouerSolo.addActionListener(new ActionListener() {
             @Override
+
             public void actionPerformed(ActionEvent e) {
                 new ChoixJeuSolo();
                 CARD.show(CONTAINER,"choixjeu");
@@ -46,7 +53,7 @@ public class Connexion implements Graphique{
         jouerDuo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ChoixJeuDuo();
+                //new ChoixJeuDuo();
                 CARD.show(CONTAINER,"ChoixJeuDuo");
             }
         });
@@ -176,7 +183,11 @@ public class Connexion implements Graphique{
     }
 
 
-
+    /**
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         new Connexion();
     }

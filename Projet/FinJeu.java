@@ -8,7 +8,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ *
+ */
 public class FinJeu implements Graphique {
+    /**
+     *
+     * @param score
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     FinJeu(int score) throws IOException, ClassNotFoundException {
         JLabel label=new JLabel("FIN ! Votre score est de "+score);
         JButton rejouer= new JButton("Rejouer");
@@ -51,6 +60,14 @@ public class FinJeu implements Graphique {
         CONTAINER.add(panel,"FinJeu");
     }
 
+    /**
+     *
+     * @param utilisateur
+     * @param themes
+     * @param difficulte
+     * @param nombreQuestions
+     * @param score
+     */
     public void ajouteCSV(String utilisateur, String[] themes,String difficulte,int nombreQuestions, int score){
         try {
             File file= new File("Parties.csv");

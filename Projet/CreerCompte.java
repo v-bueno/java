@@ -4,11 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+/**
+ *
+ */
 public class CreerCompte implements Serializable, Graphique {
 
     String identifiant;
     String motdepasse;
 
+    /**
+     *
+     * @throws IOException
+     */
     CreerCompte() throws IOException {
 
         //On instancie tous les composants
@@ -62,6 +69,7 @@ public class CreerCompte implements Serializable, Graphique {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 try {
                     File file=new File("Comptes.data"); //fichier contenant les comptes serialisés
                     identifiant = identifiantField.getText();

@@ -1,6 +1,9 @@
 import java.io.Serializable;
 import java.util.Arrays;
 
+/**
+ *
+ */
 public class Partie implements Serializable {
     private String mode;
     private String difficulte;
@@ -8,12 +11,26 @@ public class Partie implements Serializable {
     private int score;
     private int nombrequestions;
 
+    /**
+     *
+     * @param mode
+     * @param difficulte
+     * @param theme
+     */
     public Partie(String mode, String difficulte, String[] theme) {
         this.mode = mode;
         this.difficulte = difficulte;
         this.theme = theme;
     }
 
+    /**
+     *
+     * @param mode
+     * @param difficulte
+     * @param theme
+     * @param score
+     * @param nombrequestions
+     */
     public Partie(String mode, String difficulte, String[] theme, int score, int nombrequestions) {
         this.mode = mode;
         this.difficulte = difficulte;
@@ -21,6 +38,14 @@ public class Partie implements Serializable {
         this.score = score;
         this.nombrequestions = nombrequestions;
     }
+
+    /**
+     *
+     * @param mode
+     * @param difficulte
+     * @param theme
+     * @param nombrequestions
+     */
     public Partie(String mode, String difficulte, String[] theme,int nombrequestions) {
         this.mode = mode;
         this.difficulte = difficulte;
@@ -68,6 +93,10 @@ public class Partie implements Serializable {
         this.nombrequestions = nombrequestions;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Partie{" +

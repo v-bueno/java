@@ -20,11 +20,10 @@ public class JeuSolo implements Graphique, ActionListener  {
     private BoutonReponse bouton3;
     private BoutonReponse bouton4;
     private BoutonReponse[] boutons;
+    private JLabel labelReponse=new JLabel();
     private JLabel labelQuestion;
     private JLabel labelScore;
-    private JLabel labelBonneReponse;
-    private JLabel labelMauvaiseReponse;
-    private JLabel labelPasReponse;
+
     private JLabel labelTempsRestant;
     private Timer chrono;
     private int tempsRestant;
@@ -49,12 +48,22 @@ public class JeuSolo implements Graphique, ActionListener  {
             @Override
             public void run() {
                 if (tempsRestant==1) {
-                    String dernierereponse = listequestions.get(0).getReponses()[listequestions.get(0).getBonnereponse() - 1];
-                    listequestions.remove(0);
-                    new JeuSolo(listequestions, score, dernierereponse, partie).pasReponse();
-                    labelPasReponse.setVisible(true);
-                    CARD.show(CONTAINER, "JeuSolo");
-                    chrono.cancel();
+                    if(listequestions.size()!=1) {
+                        String dernierereponse = listequestions.get(0).getReponses()[listequestions.get(0).getBonnereponse() - 1];
+                        listequestions.remove(0);
+                        new JeuSolo(listequestions, score, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était "+dernierereponse,Color.orange);
+                        CARD.show(CONTAINER, "JeuSolo");
+                        chrono.cancel();
+                    }else{
+                        try {
+                            new FinJeu(score).setLabelReponse("Temps écoulé ! La bonne réponse était "+listequestions.get(0).getReponses()[listequestions.get(0).getBonnereponse() - 1],Color.orange);
+                            CARD.show(CONTAINER,"FinJeu");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
                 else{
                     tempsRestant-=1;
@@ -73,19 +82,12 @@ public class JeuSolo implements Graphique, ActionListener  {
         labelQuestion=new JLabel(questions.get(0).getQuestion());
         labelScore = new JLabel("Score : "+score);
 
-        
-        labelBonneReponse = new JLabel("Bonne réponse !");
-        labelMauvaiseReponse = new JLabel("Mauvaise réponse ! La bonne réponse était"+derniereReponse);
-        labelPasReponse = new JLabel("Temps Écoulé ! La bonne réponse était"+derniereReponse);
+
+
         labelTempsRestant = new JLabel("Temps Restant : "+tempsRestant);
         labelTempsRestant.setForeground(Color.BLACK);
         labelTempsRestant.setVisible(true);
-        labelBonneReponse.setForeground(Color.green);
-        labelBonneReponse.setVisible(false);
-        labelMauvaiseReponse.setForeground(Color.red);
-        labelMauvaiseReponse.setVisible(false);
-        labelPasReponse.setForeground((Color.yellow));
-        labelPasReponse.setVisible((false));
+
 
         JPanel panel= new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -118,9 +120,8 @@ public class JeuSolo implements Graphique, ActionListener  {
         panel.add(labelTempsRestant,gbc);
         gbc.gridx=0;
         gbc.gridy=8;
-        panel.add(labelBonneReponse,gbc);
-        panel.add(labelMauvaiseReponse,gbc);
-        panel.add(labelPasReponse,gbc);
+
+        panel.add(labelReponse,gbc);
         CONTAINER.add("JeuSolo",panel);
         bouton1.getBouton().addActionListener(this);
         bouton2.getBouton().addActionListener(this);
@@ -143,7 +144,7 @@ public class JeuSolo implements Graphique, ActionListener  {
                 partie.setScore(score);
                 Connexion.compteUtilise.ajoutePartie(partie);
                 try {
-                    new FinJeu(score);
+                    new FinJeu(score).setLabelReponse("Bonne réponse !",Color.red);;
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException ex) {
@@ -154,8 +155,7 @@ public class JeuSolo implements Graphique, ActionListener  {
                 String dernierereponse=listequestions.get(0).getReponses()[listequestions.get(0).getBonnereponse()-1];
                 score=score+listequestions.get(0).getPoints();
                 listequestions.remove(0);
-                new JeuSolo(listequestions,score,dernierereponse,partie).bonneReponse();
-                labelBonneReponse.setVisible(true);
+                new JeuSolo(listequestions,score,dernierereponse,partie).setLabelReponse("Bonne réponse !",Color.green);
                 CARD.show(CONTAINER, "JeuSolo");
             }
         }else{
@@ -167,7 +167,7 @@ public class JeuSolo implements Graphique, ActionListener  {
                 partie.setScore(score);
                 Connexion.compteUtilise.ajoutePartie(partie);
                 try {
-                    new FinJeu(score);
+                    new FinJeu(score).setLabelReponse("Mauvaise réponse ! La bonne réponse était "+listequestions.get(0).getReponses()[listequestions.get(0).getBonnereponse() - 1],Color.red);;
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException ex) {
@@ -181,21 +181,15 @@ public class JeuSolo implements Graphique, ActionListener  {
                 }
                 String dernierereponse=listequestions.get(0).getReponses()[listequestions.get(0).getBonnereponse()-1];
                 listequestions.remove(0);
-                new JeuSolo(listequestions,score,dernierereponse,partie).mauvaiseReponse();
-                labelMauvaiseReponse.setVisible(true);
+                new JeuSolo(listequestions,score,dernierereponse,partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était "+ dernierereponse,Color.red);
                 CARD.show(CONTAINER, "JeuSolo");
             }
         }
     chrono.cancel();
     }
-    public void bonneReponse(){
-        labelBonneReponse.setVisible(true);
-    }
-    public void mauvaiseReponse(){
-        labelMauvaiseReponse.setVisible(true);
-    }
-    public void pasReponse(){
-        labelPasReponse.setVisible(true);
+    public void setLabelReponse(String text,Color color){
+        labelReponse.setText(text);
+        labelReponse.setForeground(color);
     }
 
 }

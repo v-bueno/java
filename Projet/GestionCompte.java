@@ -12,6 +12,7 @@ import java.util.HashMap;
  *
  */
 public class GestionCompte implements Graphique{
+    JLabel labelErreur=new JLabel();
     /**
      *
      * @throws IOException
@@ -21,12 +22,8 @@ public class GestionCompte implements Graphique{
         JButton supprimer=new JButton("Supprimer le compte");
         JButton passeradmin=new JButton("Passer le compte en admin");
         JButton suspendre=new JButton("Suspendre le compte");
-        JLabel probleme=new JLabel("Vous ne pouvez pas modifier le compte d'un admin");
-        JLabel unique=new JLabel("Vous ne pouvez modifier les comptes qu'un par un");
-        probleme.setForeground(Color.red);
-        probleme.setVisible(false);
-        unique.setForeground(Color.red);
-        unique.setVisible(false);
+
+
 
         String[] colonnes= {"Identifiant","Mot de passe","Rôle","Suspendu"};
         DefaultTableModel model= new DefaultTableModel(colonnes,0);
@@ -81,8 +78,7 @@ public class GestionCompte implements Graphique{
         gbc.gridwidth=3;
         gbc.gridx=0;
         gbc.gridy=5;
-        panel.add(probleme,gbc);
-        panel.add(unique,gbc);
+        panel.add(labelErreur,gbc);
         CONTAINER.add(panel,"gestioncomptes");
 
 
@@ -90,8 +86,7 @@ public class GestionCompte implements Graphique{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (table.getSelectedRowCount() > 1) {
-                    probleme.setVisible(false);
-                    unique.setVisible(true);
+                    setLabelErreur("Vous ne pouvez modifier qu'un compte à la fois",Color.red);
                 } else {
                     int ligne = table.getSelectedRow();
                     if (!table.getValueAt(ligne, 2).toString().equals("Administrateur")) {
@@ -103,7 +98,7 @@ public class GestionCompte implements Graphique{
                             correspondant.setType("Administrateur");
                             correspondant.supprimer();
                             correspondant.serialiser();
-                            new EspaceAdministrateur().visibleLabelCompte();
+                            new EspaceAdministrateur().setLabelSucces("Compte modifié avec succès !",Color.green);
                             CARD.show(CONTAINER,"espaceadmin");
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -111,8 +106,7 @@ public class GestionCompte implements Graphique{
                             throw new RuntimeException(ex);
                         }
                     } else {
-                        unique.setVisible(false);
-                        probleme.setVisible(true);
+                        setLabelErreur("Vous ne pouvez pas modifier le compte d'un admin",Color.red);
                     }
                 }
             }
@@ -122,8 +116,7 @@ public class GestionCompte implements Graphique{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (table.getSelectedRowCount() > 1) {
-                    probleme.setVisible(false);
-                    unique.setVisible(true);
+                    setLabelErreur("Vous ne pouvez modifier qu'un compte à la fois",Color.red);
                 } else {
                     int ligne = table.getSelectedRow();
                     if (!table.getValueAt(ligne, 2).toString().equals("Administrateur")) {
@@ -131,7 +124,7 @@ public class GestionCompte implements Graphique{
                         Compte compte = new Compte(id);
                         try {
                             compte.supprimer();
-                            new EspaceAdministrateur().visibleLabelCompte();
+                            new EspaceAdministrateur().setLabelSucces("Compte modifié avec succès !",Color.green);
                             CARD.show(CONTAINER,"espaceadmin");
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -139,8 +132,7 @@ public class GestionCompte implements Graphique{
                             throw new RuntimeException(ex);
                         }
                     } else {
-                        unique.setVisible(false);
-                        probleme.setVisible(true);
+                        setLabelErreur("Vous ne pouvez pas modifier le compte d'un admin",Color.red);
                     }
                 }
             }
@@ -150,9 +142,8 @@ public class GestionCompte implements Graphique{
             @Override
             public void actionPerformed(ActionEvent e) {
                 {
-                    if (table.getSelectedRowCount() > 1) {
-                        probleme.setVisible(false);
-                        unique.setVisible(true);
+                    if (table.getSelectedRowCount() != 1) {
+                        setLabelErreur("Vous ne pouvez modifier qu'un compte à la fois",Color.red);
                     } else {
                         int ligne = table.getSelectedRow();
                         if (!table.getValueAt(ligne, 2).toString().equals("Administrateur")) {
@@ -160,7 +151,7 @@ public class GestionCompte implements Graphique{
                             Compte compte = new Compte(id);
                             try {
                                 compte.suspendre();
-                                new EspaceAdministrateur().visibleLabelCompte();
+                                new EspaceAdministrateur().setLabelSucces("Compte modifié avec succès !",Color.green);;
                                 CARD.show(CONTAINER,"espaceadmin");
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
@@ -168,12 +159,15 @@ public class GestionCompte implements Graphique{
                                 throw new RuntimeException(ex);
                             }
                         } else {
-                            unique.setVisible(false);
-                            probleme.setVisible(true);
+                            setLabelErreur("Vous ne pouvez pas modifier le compte d'un admin",Color.red);
                         }
                     }
                 }
             }
         });
+    }
+    public void setLabelErreur(String text,Color color){
+        labelErreur.setText(text);
+        labelErreur.setForeground(color);
     }
 }

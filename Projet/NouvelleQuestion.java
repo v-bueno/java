@@ -152,7 +152,7 @@ public class NouvelleQuestion extends JFrame implements Graphique{
                 if(enonce.length()<4||reponses[0].length()<4||reponses[1].length()<4||reponses[2].length()<4||reponses[3].length()<4) {
                     labelErreur.setVisible(true);
                 }else{
-                    new EspaceAdministrateur().visibleLabelQuestion();
+                    new EspaceAdministrateur().setLabelSucces("Question ajoutée avec succès !",Color.green);
                     CARD.show(CONTAINER,"espaceadmin");
                     Question question = new Question(enonce, reponses, theme, difficulte, temps, points, entier, malus);
                     question.ajouteCSV();

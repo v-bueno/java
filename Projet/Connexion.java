@@ -8,7 +8,7 @@ import java.io.*;
 public class Connexion implements Graphique{
 
     public static Compte compteUtilise;
-
+    private JLabel labelErreur=new JLabel();
     /**
      *
      * @throws IOException
@@ -88,14 +88,6 @@ public class Connexion implements Graphique{
         JButton connecter=new JButton("Se connecter");
         JButton creercompte= new JButton("Créer un compte");
 
-        JLabel erreur= new JLabel("Identifiant ou mot de passe incorrect");
-        erreur.setForeground(Color.red); //Met la couleur du message en rouge
-        erreur.setVisible(false); //Le message d'erreur n'est pas affiché au départ
-        JLabel suspendu= new JLabel("Ce compte est suspendu");
-        suspendu.setForeground(Color.red); //Met la couleur du message en rouge
-        suspendu.setVisible(false); //Le message d'erreur n'est pas affiché au départ
-
-
         JPanel panel= new JPanel(new GridBagLayout()); //On instancie un JPanel afin d'y mettre les composants
         GridBagConstraints gbc = new GridBagConstraints(); // On définie les contraintes du GridBagLayout pour le JPanel
         //On ajoute ainsi tous les composants à l'endroit souhaité dans le JPanel
@@ -121,8 +113,8 @@ public class Connexion implements Graphique{
         panel.add(creercompte,gbc);
         gbc.gridx=0;
         gbc.gridy=7;
-        panel.add(erreur,gbc);
-        panel.add(suspendu,gbc);
+        panel.add(labelErreur,gbc);
+
 
         //On ajoute le JPanel en tant que page "connexion" dans le container afin de la réafficher par la suite
         CONTAINER.add(panel,"connexion");
@@ -133,8 +125,7 @@ public class Connexion implements Graphique{
             public void actionPerformed(ActionEvent e) {
                 try {
                     new CreerCompte(); //Appelle le constructeur de la classe qui s'occuppe de l'affichage de la page qui crée un nouveau compte
-                    erreur.setVisible(false); //Le message d'erreur est invisble pour quand on revient sur la page connexion
-                    suspendu.setVisible(false);
+                    labelErreur.setVisible(false);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -161,16 +152,14 @@ public class Connexion implements Graphique{
                             CARD.show(CONTAINER, "menuprincipal"); //affiche la page du menu principal
                             menuBar.setVisible(true); //affiche la barre de menu car le joueur est connecté
                             //Les composants pouvant avoir été changé par rapport à l'affichage de base sont remis à zéro
-                            erreur.setVisible(false);
-                            suspendu.setVisible(false);
+                            labelErreur.setVisible(false);
                             identifiant.setText("");
                             passwordField.setText("");
                         }else{
-                            suspendu.setVisible(true);
+                            setLabelErreur("Compte suspendu",Color.red);
                         }
                     }else{ //Aucun compte sérialisé ne correspond
-                        erreur.setVisible(true); //Affiche le message
-                        suspendu.setVisible(false);
+                        setLabelErreur("Identifiant ou mot de passe incorrect",Color.red);
 
                     }
                 } catch (IOException ex) {
@@ -182,6 +171,10 @@ public class Connexion implements Graphique{
         });
     }
 
+    public void setLabelErreur(String text,Color color){
+        labelErreur.setText(text);
+        labelErreur.setForeground(color);
+    }
 
     /**
      *

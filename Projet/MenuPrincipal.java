@@ -90,8 +90,8 @@ public class MenuPrincipal implements Graphique{
         jeuDuo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new ChoixJeuDuo();
-                CARD.show(CONTAINER,"ChoixJeuDuo");
+                new ChoixJeuMulti();
+                CARD.show(CONTAINER,"choixjeumulti");
             }
         });
 

@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -103,7 +102,7 @@ public class JeuSolo implements Graphique, ActionListener  {
         panel.add(bouton1.getBouton(),gbc);
         gbc.gridx=0;
         gbc.gridy=3;
-        gbc.insets=new Insets(0,0,0,0);
+        gbc.insets=new Insets(5,0,0,0);
         panel.add(bouton2.getBouton(),gbc);
         gbc.gridx=0;
         gbc.gridy=4;
@@ -144,7 +143,7 @@ public class JeuSolo implements Graphique, ActionListener  {
                 partie.setScore(score);
                 Connexion.compteUtilise.ajoutePartie(partie);
                 try {
-                    new FinJeu(score).setLabelReponse("Bonne réponse !",Color.red);;
+                    new FinJeu(score).setLabelReponse("Bonne réponse !",Color.green);;
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (ClassNotFoundException ex) {

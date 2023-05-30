@@ -9,28 +9,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- *
- */
-public class FinJeu implements Graphique {
-    private Clip clip;
-    private JLabel labelReponse = new JLabel();
-    private int score;
-    /**
-     *
-     * @param score
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    FinJeu(int score) throws IOException, ClassNotFoundException {
-        this.score=score;
+public class FinJeuMulti implements Graphique{
+    Clip clip;
+    JLabel labelReponse=new JLabel();
+    int scoreA;
+    int scoreB;
 
-        JLabel label=new JLabel("FIN ! Votre score est de "+score);
-        JButton rejouer= new JButton("Rejouer");
-        JButton menuPrincipal= new JButton("Menu Principal");
+    FinJeuMulti(int scoreA, int scoreB) throws IOException, ClassNotFoundException {
+        this.scoreA = scoreA;
+        this.scoreB = scoreB;
+
+        JLabel label = new JLabel("FIN ! Le score de l'équipe A est " + scoreA+" et le score de l'équipe B est "+scoreB);
+        JButton rejouer = new JButton("Rejouer");
+        JButton menuPrincipal = new JButton("Menu Principal");
         Connexion.compteUtilise.serialiser();
-        Partie partie=Connexion.compteUtilise.getHistorique().get(Connexion.compteUtilise.getHistorique().size()-1);
-        ajouteCSV(Connexion.compteUtilise.getIdentifiant(),partie.getTheme(), partie.getDifficulte(), partie.getNombrequestions(),partie.getScore());
+        Partie partie = Connexion.compteUtilise.getHistorique().get(Connexion.compteUtilise.getHistorique().size() - 1);
+        ajouteCSV(Connexion.compteUtilise.getIdentifiant(), partie.getTheme(), partie.getDifficulte(), partie.getNombrequestions(), partie.getScore());
         joueSon();
         menuPrincipal.addActionListener(new ActionListener() {
             @Override
@@ -41,36 +35,38 @@ public class FinJeu implements Graphique {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                CARD.show(CONTAINER,"menuprincipal");
+                CARD.show(CONTAINER, "menuprincipal");
             }
         });
         rejouer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ChoixJeuSolo().lanceJeu(new ArrayList<>(Arrays.asList(partie.getTheme())),partie.getDifficulte(),partie.getNombrequestions());
+                new ChoixJeuMulti().lanceJeu(new ArrayList<>(Arrays.asList(partie.getTheme())), partie.getDifficulte(), partie.getNombrequestions());
                 clip.close();
             }
         });
 
 
-        JPanel panel=new JPanel(new GridBagLayout());
-        GridBagConstraints gbc=new GridBagConstraints();
-        gbc.fill=GridBagConstraints.CENTER;
-        gbc.insets=new Insets(25,0,0,0);
-        gbc.gridx=0;
-        gbc.gridy=0;
-        panel.add(labelReponse,gbc);
-        gbc.gridx=0;
-        gbc.gridy=1;
-        panel.add(label,gbc);
-        gbc.gridx=0;
-        gbc.gridy=2;
-        panel.add(rejouer,gbc);
-        gbc.gridx=0;
-        gbc.gridy=3;
-        panel.add(menuPrincipal,gbc);
-        CONTAINER.add(panel,"FinJeu");
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(25, 0, 0, 0);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(labelReponse, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(label, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(rejouer, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(menuPrincipal, gbc);
+        CONTAINER.add(panel, "FinJeu");
     }
+
+
 
     /**
      *
@@ -128,4 +124,5 @@ public class FinJeu implements Graphique {
         labelReponse.setText(texte);
         labelReponse.setForeground(couleur);
     }
+
 }

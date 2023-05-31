@@ -125,7 +125,7 @@ public class FinJeu implements Graphique {
         File file= new File("Sound.wav");
         try {
             //Permet de jouer le son
-            AudioInputStream ais= AudioSystem.getAudioInputStream(file);
+            AudioInputStream ais= AudioSystem.  getAudioInputStream(file);
             clip= AudioSystem.getClip();
             clip.open(ais);
             clip.start();

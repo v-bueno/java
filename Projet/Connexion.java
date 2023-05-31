@@ -175,7 +175,7 @@ public class Connexion implements Graphique{
                         setLabelErreur("Identifiant ou mot de passe incorrect",Color.red);
 
                     }
-                } catch (IOException ex) {
+                } catch (IOException ex) { //Si le fichier Comptes.data n'existe pas
                     setLabelErreur("Identifiant ou mot de passe incorrect",Color.red);
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
@@ -184,17 +184,16 @@ public class Connexion implements Graphique{
         });
     }
 
+    /**
+     * Change le label réponse
+     * @param text
+     * @param color
+     */
     public void setLabelErreur(String text,Color color){
         labelErreur.setText(text);
         labelErreur.setForeground(color);
     }
 
-    /**
-     *
-     * @param args entrée données par l'utilisateur.
-     * @throws IOException
-     */
-    public static void main(String[] args) throws IOException {
-        new Connexion();
-    }
+
+
 }

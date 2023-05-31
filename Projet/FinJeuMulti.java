@@ -16,12 +16,24 @@ public class FinJeuMulti implements Graphique{
     private int scoreB;
     private Partie partie;
 
+    /**
+     * Créé une interface qui peut être affiché
+     * @param scoreA
+     * @param scoreB
+     * @param nomEquipeA
+     * @param nomEquipeB
+     * @param version
+     * @param partie
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     FinJeuMulti(int scoreA, int scoreB,String nomEquipeA,String nomEquipeB,int version,Partie partie) throws IOException, ClassNotFoundException {
         this.scoreA = scoreA;
         this.scoreB = scoreB;
         this.partie=partie;
         Connexion.menuBar.setVisible(true); //on réaffiche le menu
 
+        //Gère les labels pour afficher l'équipe gagnante et les scores
         JLabel label;
         JLabel labelScoreFinal=new JLabel("Score équipe "+nomEquipeA+" : "+scoreA+" et Score équipe "+nomEquipeB+" : " +scoreB);
         if (scoreA<scoreB) {
@@ -33,9 +45,11 @@ public class FinJeuMulti implements Graphique{
         else {
             label = new JLabel("FIN ! Les 2 équipes sont ex aequo !");
         }
+        //Instancie les deux boutons utiles
         JButton rejouer = new JButton("Rejouer");
         JButton menuPrincipal = new JButton("Menu Principal");
         joueSon();
+        //Affiche le menu principal
         menuPrincipal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,6 +62,7 @@ public class FinJeuMulti implements Graphique{
                 CARD.show(CONTAINER, "menuprincipal");
             }
         });
+        //rejoue avec la même version et les mêmes paramètres via la méthode lanceJeu dans ChoixJeuMulti() selon la version
         rejouer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,7 +78,7 @@ public class FinJeuMulti implements Graphique{
             }
         });
 
-
+        //Place les composants dans le panel à l'endroit souhaité
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.CENTER;
@@ -86,45 +101,9 @@ public class FinJeuMulti implements Graphique{
     }
 
 
-
     /**
-     *
-     * @param utilisateur
-     * @param themes
-     * @param difficulte
-     * @param nombreQuestions
-     * @param score
+     * Joue le son de Sound.wav
      */
-    public void ajouteCSV(String utilisateur, String[] themes,String difficulte,int nombreQuestions, int score){
-        try {
-            File file= new File("Parties.csv");
-            FileWriter writer = new FileWriter(file, true);
-
-            // Ajouter l'en-tête si le fichier est vide
-            if (file.length() == 0) {
-                writer.append("Utilisateur,Thèmes,Difficulte,Nombre Question,Score \n");
-            }
-
-            // Ajouter les objets dans le fichier CSV
-
-            writer.append(utilisateur);
-            writer.append(",");
-
-            writer.append(Arrays.toString(themes).replace(",",";"));
-            writer.append(",");
-            writer.append(difficulte);
-            writer.append(",");
-            writer.append(String.valueOf(nombreQuestions));
-            writer.append(",");
-            writer.append(String.valueOf(score));
-            writer.append("\n");
-
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void joueSon(){
         File file= new File("Sound.wav");
         try {
@@ -139,6 +118,11 @@ public class FinJeuMulti implements Graphique{
         }
     }
 
+    /**
+     * Modifie le label réponse
+     * @param texte
+     * @param couleur
+     */
     public void setLabelReponse(String texte,Color couleur){
         labelReponse.setText(texte);
         labelReponse.setForeground(couleur);

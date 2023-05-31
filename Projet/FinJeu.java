@@ -24,16 +24,20 @@ public class FinJeu implements Graphique {
      */
     FinJeu(int score) throws IOException, ClassNotFoundException {
         this.score=score;
+        //On fait les changements graphiques souhaités
         Connexion.menuBar.setVisible(true); //on réaffiche le menu
-
-        Connexion.compteUtilise.incrementeNombreParties();
         JLabel label=new JLabel("FIN ! Votre score est de "+score);
         JButton rejouer= new JButton("Rejouer");
         JButton menuPrincipal= new JButton("Menu Principal");
+
+        //On fait les modifications pour le compte et les parties (le CSV)
+        Connexion.compteUtilise.incrementeNombreParties();
         Connexion.compteUtilise.serialiser();
         Partie partie=Connexion.compteUtilise.getHistorique().get(Connexion.compteUtilise.getHistorique().size()-1);
         ajouteCSV(Connexion.compteUtilise.getIdentifiant(),partie.getTheme(), partie.getDifficulte(), partie.getNombrequestions(),partie.getScore());
-        joueSon();
+        joueSon(); //Joue le son
+
+        //Réaffiche le Menu Principal
         menuPrincipal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,6 +50,8 @@ public class FinJeu implements Graphique {
                 CARD.show(CONTAINER,"menuprincipal");
             }
         });
+
+        //Rejoue avec les mêmes paramètres
         rejouer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +60,7 @@ public class FinJeu implements Graphique {
             }
         });
 
-
+        //Place les composants à l'endroit souhaité dans le panel
         JPanel panel=new JPanel(new GridBagLayout());
         GridBagConstraints gbc=new GridBagConstraints();
         gbc.fill=GridBagConstraints.CENTER;
@@ -75,7 +81,7 @@ public class FinJeu implements Graphique {
     }
 
     /**
-     *
+     * Ajoute la partie via les paramètres à Partie.csv
      * @param utilisateur
      * @param themes
      * @param difficulte
@@ -112,9 +118,13 @@ public class FinJeu implements Graphique {
         }
     }
 
+    /**
+     *Joue le son
+     */
     public void joueSon(){
         File file= new File("Sound.wav");
         try {
+            //Permet de jouer le son
             AudioInputStream ais= AudioSystem.getAudioInputStream(file);
             clip= AudioSystem.getClip();
             clip.open(ais);
@@ -126,6 +136,11 @@ public class FinJeu implements Graphique {
         }
     }
 
+    /**
+     * Modifie le label réponse
+     * @param texte
+     * @param couleur
+     */
     public void setLabelReponse(String texte,Color couleur){
         labelReponse.setText(texte);
         labelReponse.setForeground(couleur);

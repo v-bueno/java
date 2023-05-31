@@ -12,8 +12,8 @@ import java.util.TimerTask;
  */
 public class JeuMultiv2 implements Graphique, ActionListener  {
     private ArrayList<Question> listequestions;
-    int scoreA;
-    int scoreB;
+    private int scoreA;
+    private int scoreB;
     private Partie partie;
     private BoutonReponse bouton1;
     private BoutonReponse bouton2;
@@ -51,6 +51,7 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
         this.equipeDuTour = equipeDuTour;
         this.nomEquipeA=nomEquipeA;
         this.nomEquipeB=nomEquipeB;
+        //permet de passer de 0 à 1 à chaque appel et de choisir l'équipe selon cet entier
         equipeDuProchainTour=(equipeDuTour+1)%2;
 
         Connexion.menuBar.setVisible(false); //pour ne pas avoir de probleme avec le timer et un nouvel appel de fonction
@@ -86,6 +87,7 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
             }
         };
 
+        //Instancie les boutons et un tableau pour avoir l'indice du bouton de la bonne réponse
         bouton1 = new BoutonReponse(chrono,0,questions);
         bouton2 = new BoutonReponse(chrono,1,questions);
         bouton3 = new BoutonReponse(chrono,2,questions);
@@ -93,6 +95,7 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
 
         boutons = new BoutonReponse[]{bouton1, bouton2, bouton3, bouton4};
 
+        //Instancie les labels et les affichent selon les scores
         labelEquipe =new JLabel();
         if (equipeDuTour==0){
             labelEquipe.setText("Au tour de l'équipe "+nomEquipeA);
@@ -107,7 +110,7 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
         labelTempsRestant.setForeground(Color.BLACK);
         labelTempsRestant.setVisible(true);
 
-
+        //Place les composants à l'endroit souhaité dans le panel
         JPanel panel= new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill=GridBagConstraints.CENTER;
@@ -155,7 +158,7 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
         bouton3.getBouton().addActionListener(this);
         bouton4.getBouton().addActionListener(this);
 
-
+        //Timer effectue timeOutTask toutes les secondes
         chrono.schedule(timeOutTask,1000,1000);
 
     }
@@ -265,6 +268,12 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
         }
         chrono.cancel();
     }
+
+    /**
+     * Permet d'écrire du texte avec la couleur souhaitée dans le label
+     * @param text texte à mettre dans le label
+     * @param color couleur du texte
+     */
     public void setLabelReponse(String text,Color color){
         labelReponse.setText(text);
         labelReponse.setForeground(color);

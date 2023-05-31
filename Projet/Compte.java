@@ -239,15 +239,19 @@ public class Compte implements Serializable {
      * @throws ClassNotFoundException
      */
     public Compte verifieIdentifiantMotdepasse() throws IOException, ClassNotFoundException {
+        //Récupère la Hashmap sérialisée
         FileInputStream fis = new FileInputStream("Comptes.data");
         ObjectInputStream ois = new ObjectInputStream(fis);
         HashMap<String,Compte> hashMap= (HashMap<String,Compte>) ois.readObject();
+        //Récupère le compte qui a le même identifiant dans la Hashmap
         Compte compte=hashMap.get(this.getIdentifiant());
-        if (compte!=null) {
+        if (compte!=null) { //si le compte obtenu n'est pas nul existe dans la hashmap
+            //On vérifie si le compte à le même mot de passe
             if (compte.getMotdepasse().equals(this.getMotdepasse())) {
                 return compte;
             }
         }
+        //Si il n'y a aucun compte dans la Hashmap qui a le même identifiant et le même mot de passe
         ois.close();
         return null;
     }
@@ -259,9 +263,11 @@ public class Compte implements Serializable {
      * @throws ClassNotFoundException
      */
     public Boolean verifieIdentifiant() throws IOException,ClassNotFoundException {
+        //Récupère la Hashmap sérialisée
         FileInputStream fis = new FileInputStream("Comptes.data");
         ObjectInputStream ois = new ObjectInputStream(fis);
         HashMap<String,Compte> hashMap= (HashMap<String,Compte>) ois.readObject();
+        //Si la hashmap ne contient pas de clé correspondant à l'identifiant
         if(hashMap.get(this.getIdentifiant())==null){
             return false;
         }

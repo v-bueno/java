@@ -13,8 +13,8 @@ import java.util.TimerTask;
 public class JeuMultiv1 implements Graphique, ActionListener  {
     private ArrayList<Question> listequestionsA;
     private ArrayList<Question> listequestionsB;
-    int scoreA;
-    int scoreB;
+    private int scoreA;
+    private int scoreB;
     private Partie partie;
     private BoutonReponse bouton1;
     private BoutonReponse bouton2;
@@ -38,14 +38,16 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
     private String nomEquipeB;
 
     /**
-     *
-     * @param questionsA
-     * @param questionsB
-     * @param scoreA
-     * @param scoreB
-     * @param equipeDuTour
-     * @param derniereReponse
-     * @param partie
+     * Affiche une interface avec 4 boutons pour répondre à la première question de la liste de l'équipe qui joue.
+     * Si la liste n'a qu'une question le jeu s'arrête ensuite. Sinon on rappelle JeuMultiv1 en supprimant la première
+     * question afin d'en avoir une nouvelle et en faisant toutes les modifications pour la gestion des équipes.
+     * @param questionsA liste de questions restantes de l'équipe A
+     * @param questionsB liste de questions restantes de l'équipe B
+     * @param scoreA score en cours de l'équipe A
+     * @param scoreB score en cours de l'équipe B
+     * @param equipeDuTour échange entre 0 et 1 à chaque appel afin de déterminer l'équipe qui doit jouer
+     * @param derniereReponse réponse de la question en cours
+     * @param partie partie permettant de connaître les paramètres et de pouvoir rejouer avec les mêmes par la suite
      */
     JeuMultiv1(ArrayList<Question> questionsA,ArrayList<Question> questionsB,int scoreA,int scoreB,String nomEquipeA,String nomEquipeB,boolean equipeAFinie,boolean equipeBFinie,int equipeDuTour, String derniereReponse,Partie partie) {
 
@@ -59,6 +61,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         this.equipeBFinie = equipeBFinie;
         this.nomEquipeA = nomEquipeA;
         this.nomEquipeB=nomEquipeB;
+        //Détermine quelle équipe doit jouer
         if (equipeDuTour==0){
             joueEquipeA();
         }
@@ -70,7 +73,10 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
     }
 
 
-
+    /**
+     * Fait jouer l'équipe A. Elle joue tant que ça liste n'est pas épuisé, qu'elle a la bonne réponse ou qu'elle a la
+     * mauvaise réponse mais que l'équipe B à sa liste de questions épuisée.
+     */
     public void joueEquipeA(){
         this.equipeDuProchainTour=(equipeDuTour+1)%2;
         this.chrono = new Timer(true);
@@ -78,16 +84,19 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         TimerTask timeOutTask = new TimerTask() {
             @Override
             public void run() {
-                if (tempsRestant==1) {
-                    if(listequestionsA.size()!=1) {
-                        String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
+                if (tempsRestant==1) { //S'il n'y a plus de temps pour répondre
+                    if(listequestionsA.size()!=1) { //S'il n'y a plus de questions après
+                        //Définie les paramètres
+                        String derniereReponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                         listequestionsA.remove(0);
                         if (!(equipeBFinie)) {
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
+                            //Appel récursif en ajustant le joueur
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, derniereReponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + derniereReponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                         else {
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
+                            //Appel récursif en ajustant le joueur
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, derniereReponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + derniereReponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                         chrono.cancel();
@@ -95,6 +104,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         equipeAFinie=true;
                         if (equipeBFinie) {
                             try {
+                                //Le jeu s'arrête
                                 new FinJeuMulti(scoreA, scoreB,nomEquipeA,nomEquipeB, 1,partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1], Color.orange);
                                 CARD.show(CONTAINER, "FinJeu");
                             } catch (IOException e) {
@@ -119,6 +129,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
             }
         };
 
+        //Instancie les boutons correspondant à chaque réponse possible
         bouton1 = new BoutonReponse(chrono,0,listequestionsA);
         bouton2 = new BoutonReponse(chrono,1,listequestionsA);
         bouton3 = new BoutonReponse(chrono,2,listequestionsA);
@@ -137,7 +148,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         labelTempsRestant.setForeground(Color.BLACK);
         labelTempsRestant.setVisible(true);
 
-
+        //Place les composants le panel à l'endroit souhaité
         JPanel panel= new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill=GridBagConstraints.CENTER;
@@ -191,7 +202,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
     }
 
     /**
-     *
+     * Fais jouer l'équipe B (fonctionne de la même que l'équipe A)
      */
     public void joueEquipeB(){
         this.equipeDuProchainTour=(equipeDuTour+1)%2;
@@ -234,7 +245,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     }
                 }
                 else{
-                    tempsRestant-=1;
+                    tempsRestant-=1; //Decrémente le temps restants chaque seconde et set le label
                     labelTempsRestant.setText("Temps Restant : "+tempsRestant);
                 }
             }

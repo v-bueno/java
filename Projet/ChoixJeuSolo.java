@@ -32,7 +32,7 @@ public class ChoixJeuSolo implements Graphique, ActionListener {
     private GridBagConstraints gbc=new GridBagConstraints();
 
     /**
-     *
+     * Affichage de la page qui permet de choisir les paramètres pour lancer une partie en solo
      */
     ChoixJeuSolo() {
         //Créer les label

@@ -37,12 +37,16 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
     JPanel panel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc=new GridBagConstraints();
 
-
+    /**
+     * Créer la page qui permet au joueur de choisir les paramètres pour lancer son jeu en équipe
+     */
     ChoixJeuMulti() {
+        //Instancie les labels
         JLabel labeltheme=new JLabel("Cochez les thèmes :");
         JLabel labeldifficulte=new JLabel("Difficulté :");
         labelnombrequestion= new JLabel("Nombre de questions chacun :");
         labelErreur.setForeground(Color.red);
+        //Place les composants à l'endroit souhaité
         gbc.fill=GridBagConstraints.HORIZONTAL;
         gbc.gridx=0;
         gbc.gridy=0;

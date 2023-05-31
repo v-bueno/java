@@ -107,6 +107,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                                 //Le jeu s'arrête
                                 new FinJeuMulti(scoreA, scoreB,nomEquipeA,nomEquipeB, 1,partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1], Color.orange);
                                 CARD.show(CONTAINER, "FinJeu");
+                                chrono.cancel();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             } catch (ClassNotFoundException e) {
@@ -230,6 +231,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                             try {
                                 new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1], Color.orange);
                                 CARD.show(CONTAINER, "FinJeu");
+                                chrono.cancel();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             } catch (ClassNotFoundException e) {

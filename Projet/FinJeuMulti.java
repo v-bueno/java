@@ -17,7 +17,8 @@ public class FinJeuMulti implements Graphique{
     private Partie partie;
 
     /**
-     * Créé une interface qui peut être affiché
+     * Créé une interface qui peut être affiché résumant la partie qui vient de se dérouler et qui permet de rejouer dans les
+     * mêmes conditions ou de retourner au menu principal
      * @param scoreA
      * @param scoreB
      * @param nomEquipeA

@@ -24,7 +24,7 @@ public class Connexion implements Graphique{
 
         //On crée un menu que nous allons ajouter à la fenêtre
         JMenu partieSolo=new JMenu("Partie Solo");
-        JMenu partieDuo=new JMenu("Partie Duo");
+        JMenu partieDuo=new JMenu("Partie en équipe");
         JMenu aide=new JMenu("Aide");
         JMenuItem jouerSolo=new JMenuItem("Jouer");
         JMenuItem jouerDuo=new JMenuItem("Jouer");

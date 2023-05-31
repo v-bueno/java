@@ -132,12 +132,18 @@ public class Question {
                 writer.append("Question,Réponse1,Réponse2,Réponse3,Réponse4,Thème,Difficulté,Temps,Points,Bonne Réponse,Malus\n");
             }
 
+            //On enlève les virgules et les apostrophes qui posent problème dans la lecture du CSV
+            String nouvelleQuestion=this.getQuestion().replace(",",";").replace('"',' ');
             // Ajouter les objets dans le fichier CSV
+            String [] nouvelleReponses=new String[4];
+            for(int i=0;i<4;i++) {
+                nouvelleReponses[i]=this.getReponses()[i].replace(",",";").replace('"',' ');;
+            }
 
-            writer.append(this.getQuestion());
+            writer.append(nouvelleQuestion);
             writer.append(",");
             for(int i=0;i<4;i++) {
-                writer.append(this.getReponses()[i]);
+                writer.append(nouvelleReponses[i]);
                 writer.append(",");
             }
             writer.append(this.getTheme());

@@ -10,29 +10,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FinJeuMulti implements Graphique{
-    Clip clip;
-    JLabel labelReponse=new JLabel();
-    int scoreA;
-    int scoreB;
+    private Clip clip;
+    private JLabel labelReponse=new JLabel();
+    private int scoreA;
+    private int scoreB;
+    private Partie partie;
 
-    FinJeuMulti(int scoreA, int scoreB,int version) throws IOException, ClassNotFoundException {
+    FinJeuMulti(int scoreA, int scoreB,String nomEquipeA,String nomEquipeB,int version,Partie partie) throws IOException, ClassNotFoundException {
         this.scoreA = scoreA;
         this.scoreB = scoreB;
+        this.partie=partie;
         JLabel label;
+        JLabel labelScoreFinal=new JLabel("Score équipe "+nomEquipeA+" : "+scoreA+" et score équipe "+nomEquipeB+" : " +scoreB);
         if (scoreA<scoreB) {
-            label = new JLabel("FIN ! L'équipe B l'emporte !");
+            label = new JLabel("FIN ! L'équipe "+nomEquipeB+" l'emporte !");
         }
         else if (scoreA>scoreB) {
-            label = new JLabel("FIN ! L'équipe A l'emporte !");
+            label = new JLabel("FIN ! L'équipe "+nomEquipeA+" l'emporte !");
         }
         else {
             label = new JLabel("FIN ! Les 2 équipes sont ex aequo !");
         }
         JButton rejouer = new JButton("Rejouer");
         JButton menuPrincipal = new JButton("Menu Principal");
-        Connexion.compteUtilise.serialiser();
-        Partie partie = Connexion.compteUtilise.getHistorique().get(Connexion.compteUtilise.getHistorique().size() - 1);
-        ajouteCSV(Connexion.compteUtilise.getIdentifiant(), partie.getTheme(), partie.getDifficulte(), partie.getNombrequestions(), partie.getScore());
         joueSon();
         menuPrincipal.addActionListener(new ActionListener() {
             @Override
@@ -74,9 +74,11 @@ public class FinJeuMulti implements Graphique{
         panel.add(label, gbc);
         gbc.gridx = 0;
         gbc.gridy = 2;
+        panel.add(labelScoreFinal,gbc);
+        gbc.gridy = 3;
         panel.add(rejouer, gbc);
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         panel.add(menuPrincipal, gbc);
         CONTAINER.add(panel, "FinJeu");
     }

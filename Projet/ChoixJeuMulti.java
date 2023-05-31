@@ -27,6 +27,12 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
     JButton jouerV2 = new JButton("Jouer à la V2!");
     JLabel labelnombrequestion;
     JLabel labelErreur = new JLabel("Sélectionnez un nombre");
+    JLabel labelEquipeA=new JLabel("Nom de l'équipe A");
+    JLabel labelEquipeB=new JLabel("Nom de l'équipe B");
+    JTextField fieldEquipeA=new JTextField();
+    JTextField fieldEquipeB=new JTextField();
+
+
 
     JPanel panel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc=new GridBagConstraints();
@@ -73,11 +79,23 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         gbc.insets=new Insets(15,0,0,0);
         gbc.gridx=0;
         gbc.gridy=9;
+        panel.add(labelEquipeA,gbc);
+        gbc.gridx=1;
+        panel.add(labelEquipeB,gbc);
+        gbc.insets=new Insets(0,0,0,0);
+        gbc.gridx=0;
+        gbc.gridy=10;
+        panel.add(fieldEquipeA,gbc);
+        gbc.gridx=1;
+        panel.add(fieldEquipeB,gbc);
+        gbc.insets=new Insets(15,0,0,0);
+        gbc.gridx=0;
+        gbc.gridy=11;
         panel.add(jouerV1,gbc);
         gbc.gridx=1;
         panel.add(jouerV2,gbc);
         gbc.gridx=0;
-        gbc.gridy=10;
+        gbc.gridy=12;
         panel.add(labelErreur,gbc);
 
         CONTAINER.add(panel,"choixjeumulti");
@@ -188,13 +206,12 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         Collections.shuffle(listequestion);
         List<Question> sublistA = listequestion.subList(0, nombrequestions);
         ArrayList<Question> nouvellelisteA = new ArrayList<>(sublistA);
-        Collections.shuffle(listequestion);
-        List<Question> sublistB = listequestion.subList(0, nombrequestions);
+        List<Question> sublistB = listequestion.subList(nombrequestions, nombrequestions*2);
         ArrayList<Question> nouvellelisteB = new ArrayList<>(sublistB);
         String[] themesjeu = new String[themes.size()];
         themes.toArray(themesjeu);
         Partie partie = new Partie("Jeu Duo", difficulte, themesjeu, nombrequestions);
-        new JeuMultiv1(nouvellelisteA,nouvellelisteB, 0, 0,false,false,0,"",partie);
+        new JeuMultiv1(nouvellelisteA,nouvellelisteB, 0, 0,fieldEquipeA.getText(),fieldEquipeB.getText(),false,false,0,"",partie);
         CARD.show(CONTAINER, "JeuMulti");
     }
     public void lanceJeuV2(ArrayList<String> themes,String difficulte,int nombrequestions){
@@ -215,7 +232,7 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         String[] themesjeu = new String[themes.size()];
         themes.toArray(themesjeu);
         Partie partie = new Partie("Jeu Duo", difficulte, themesjeu, nombrequestions);
-        new JeuMultiv2(nouvelleliste, 0, 0,0,"",partie);
+        new JeuMultiv2(nouvelleliste, 0, 0,fieldEquipeA.getText(),fieldEquipeB.getText(),0,"",partie);
         CARD.show(CONTAINER, "JeuMulti");
     }
 

@@ -24,7 +24,7 @@ public class MenuPrincipal implements Graphique{
 
         //Instancie les composants
         JButton jeuSolo = new JButton("Jeu solo");
-        JButton jeuDuo = new JButton("Jeu duo");
+        JButton jeuDuo = new JButton("Jeu en équipe");
         JButton espaceAdministrateur = new JButton("Espace Admin");
         JButton deconnexion=new JButton("Déconnexion");
         JLabel label= new JLabel("Historique de vos parties");

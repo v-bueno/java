@@ -34,6 +34,9 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
     private int equipeDuProchainTour;
     private boolean equipeAFinie;
     private boolean equipeBFinie;
+    private String nomEquipeA;
+    private String nomEquipeB;
+
     /**
      *
      * @param questionsA
@@ -44,7 +47,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
      * @param derniereReponse
      * @param partie
      */
-    JeuMultiv1(ArrayList<Question> questionsA,ArrayList<Question> questionsB,int scoreA,int scoreB,boolean equipeAFinie,boolean equipeBFinie,int equipeDuTour, String derniereReponse,Partie partie) {
+    JeuMultiv1(ArrayList<Question> questionsA,ArrayList<Question> questionsB,int scoreA,int scoreB,String nomEquipeA,String nomEquipeB,boolean equipeAFinie,boolean equipeBFinie,int equipeDuTour, String derniereReponse,Partie partie) {
 
         this.scoreA=scoreA;
         this.scoreB=scoreB;
@@ -54,6 +57,8 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         this.equipeDuTour = equipeDuTour;
         this.equipeAFinie = equipeAFinie;
         this.equipeBFinie = equipeBFinie;
+        this.nomEquipeA = nomEquipeA;
+        this.nomEquipeB=nomEquipeB;
         if (equipeDuTour==0){
             joueEquipeA();
         }
@@ -74,11 +79,11 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                         listequestionsA.remove(0);
                         if (!(equipeBFinie)) {
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                         else {
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                         chrono.cancel();
@@ -86,7 +91,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         equipeAFinie=true;
                         if (equipeBFinie) {
                             try {
-                                new FinJeuMulti(scoreA, scoreB, 1).setLabelReponse("Temps écoulé ! La bonne réponse était " + listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1], Color.orange);
+                                new FinJeuMulti(scoreA, scoreB,nomEquipeA,nomEquipeB, 1,partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1], Color.orange);
                                 CARD.show(CONTAINER, "FinJeu");
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -96,7 +101,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         }
                         else{
                             String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
-                            new JeuMultiv1(listequestionsA,listequestionsB, scoreA,scoreB,equipeAFinie,equipeBFinie,equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était "+dernierereponse,Color.orange);
+                            new JeuMultiv1(listequestionsA,listequestionsB, scoreA,scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie,equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était "+dernierereponse,Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                             chrono.cancel();
 
@@ -118,7 +123,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         boutons = new BoutonReponse[]{bouton1, bouton2, bouton3, bouton4};
 
         labelEquipe =new JLabel();
-        labelEquipe.setText("Au tour de l'équipe A");
+        labelEquipe.setText("Au tour de l'équipe "+nomEquipeA);
 
         labelQuestion=new JLabel(listequestionsA.get(0).getQuestion());
         labelScoreA =new JLabel("Score équipe A : "+scoreA);
@@ -196,11 +201,11 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                         listequestionsB.remove(0);
                         if (!(equipeAFinie)) {
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                         else {
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                         chrono.cancel();
@@ -208,7 +213,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         equipeBFinie=true;
                         if(equipeAFinie) {
                             try {
-                                new FinJeuMulti(scoreA, scoreB, 1).setLabelReponse("Temps écoulé ! La bonne réponse était " + listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1], Color.orange);
+                                new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1], Color.orange);
                                 CARD.show(CONTAINER, "FinJeu");
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -218,7 +223,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         }
                         else{
                             String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + dernierereponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
 
                         }
@@ -239,10 +244,10 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         boutons = new BoutonReponse[]{bouton1, bouton2, bouton3, bouton4};
 
         labelEquipe =new JLabel();
-        labelEquipe.setText("Au tour de l'équipe B");
+        labelEquipe.setText("Au tour de l'équipe "+nomEquipeB);
         labelQuestion=new JLabel(listequestionsB.get(0).getQuestion());
-        labelScoreA =new JLabel("Score équipe A : "+scoreA);
-        labelScoreB =new JLabel("Score équipe B : "+scoreB);
+        labelScoreA =new JLabel("Score équipe "+nomEquipeA+" : "+scoreA);
+        labelScoreB =new JLabel("Score équipe "+nomEquipeB+ " : "+scoreB);
 
         labelTempsRestant = new JLabel("Temps Restant : "+tempsRestant);
         labelTempsRestant.setForeground(Color.BLACK);
@@ -311,11 +316,10 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     equipeAFinie = true;
                     scoreA = scoreA + listequestionsA.get(0).getPoints();
                     partie.setScore(scoreA);
-                    Connexion.compteUtilise.ajoutePartie(partie);
                     String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                     if (equipeBFinie) {
                         try {
-                            new FinJeuMulti(scoreA, scoreB, 1).setLabelReponse("Bonne réponse !", Color.green);
+                            new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Bonne réponse !", Color.green);
                             ;
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -325,7 +329,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         CARD.show(CONTAINER, "FinJeu");
                     }
                     else {
-                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
+                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
                 }
@@ -333,7 +337,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                     scoreA = scoreA + listequestionsA.get(0).getPoints();
                     listequestionsA.remove(0);
-                    new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
+                    new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
                     CARD.show(CONTAINER, "JeuMulti");
                 }
             } else {
@@ -345,10 +349,9 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         scoreA = 0;
                     }
                     partie.setScore(scoreA);
-                    Connexion.compteUtilise.ajoutePartie(partie);
                     if (equipeBFinie) {
                         try {
-                            new FinJeuMulti(scoreA, scoreB, 1).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1], Color.red);
+                            new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1], Color.red);
                             ;
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -358,7 +361,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         CARD.show(CONTAINER, "FinJeu");
                     }
                     else{
-                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
+                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
                 }
@@ -371,11 +374,11 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                     listequestionsA.remove(0);
                     if (!(equipeBFinie)) {
-                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
+                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
                     else{
-                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
+                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
                 }
@@ -387,11 +390,10 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     equipeBFinie=true;
                     scoreB = scoreB + listequestionsB.get(0).getPoints();
                     partie.setScore(scoreB);
-                    Connexion.compteUtilise.ajoutePartie(partie);
                     String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                     if(equipeAFinie) {
                         try {
-                            new FinJeuMulti(scoreA, scoreB, 1).setLabelReponse("Bonne réponse !", Color.red);
+                            new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Bonne réponse !", Color.red);
                             ;
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
@@ -401,14 +403,14 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         CARD.show(CONTAINER, "FinJeu");
                     }
                     else{
-                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
+                        new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
                 } else {
                     String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                     scoreB = scoreB + listequestionsB.get(0).getPoints();
                     listequestionsB.remove(0);
-                    new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
+                    new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
                     CARD.show(CONTAINER, "JeuMulti");
                 }
             }
@@ -421,10 +423,9 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                             scoreB = 0;
                         }
                         partie.setScore(scoreB);
-                        Connexion.compteUtilise.ajoutePartie(partie);
                         if (equipeAFinie) {
                             try {
-                                new FinJeuMulti(scoreA, scoreB, 1).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1], Color.red);
+                                new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1], Color.red);
                                 ;
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
@@ -434,7 +435,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                             CARD.show(CONTAINER, "FinJeu");
                         }
                         else {
-                            new JeuMultiv1(listequestionsA,listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
+                            new JeuMultiv1(listequestionsA,listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                     } else {
@@ -445,11 +446,11 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                         listequestionsB.remove(0);
                         if (!(equipeAFinie)) {
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                         else{
-                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
+                            new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
                     }

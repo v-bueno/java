@@ -195,18 +195,29 @@ public class Compte implements Serializable {
                 '}';
     }
 
+    /**
+     *
+     */
     public void incrementeNombreQuestion(){
         this.nombreQuestions=nombreQuestions+1;
     }
+
+    /**
+     *
+     */
     public void incrementeNombreReponses(){
         this.nombreReponses=nombreReponses+1;
     }
+
+    /**
+     *
+     */
     public void incrementeNombreParties(){
         this.nombreParties=nombreParties+1;
     }
 
     /**
-     *
+     * Enregistre le compte dans une HashMap qui est sérialisée dans Compte.data
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -276,7 +287,7 @@ public class Compte implements Serializable {
 
 
     /**
-     *
+     * Supprime le compte
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -291,7 +302,7 @@ public class Compte implements Serializable {
     }
 
     /**
-     *
+     * Suspend le compte
      * @throws IOException
      * @throws ClassNotFoundException
      */

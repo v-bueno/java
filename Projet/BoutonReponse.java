@@ -28,6 +28,10 @@ public class BoutonReponse {
         return bouton;
     }
 
+    /**
+     *
+     * @return Renvoie le Timer lié à ce BoutonReponse
+     */
     public Timer getChrono() {
         return chrono;
     }

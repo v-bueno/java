@@ -107,7 +107,9 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         theme3.addActionListener(this);
         theme4.addActionListener(this);
         difficultecombobox.addActionListener(this);
+        //action à réaliser si on appuie sur le bouton jouerV1
         jouerV1.addActionListener(new ActionListener() {
+            //On lance une partie dans le mode MultiV1
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(((String)nombrequestioncombobox.getSelectedItem()).equals("Aucune")) {
@@ -128,8 +130,9 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
                 }
             }
         });
-
+        //action à réaliser en cas d'appui sur jouerv2
         jouerV2.addActionListener(new ActionListener() {
+            //On lance une partie dans le mode MultiV2
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(((String)nombrequestioncombobox.getSelectedItem()).equals("Aucune")) {
@@ -184,6 +187,13 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         CARD.show(CONTAINER,"choixjeumulti");
     }
 
+    /**
+     * Récupère toutes les questions du thème et de la difficulté choisi
+     * @param theme theme choisi
+     * @param difficulte difficulté choisie
+     * @return renvoi la liste des questions qui correspondent à la difficulté et au thème choisi
+     * @throws IOException
+     */
     public ArrayList<Question> lisCSV(String theme,String difficulte) throws IOException {
         FileReader file= new FileReader("Question.csv");
         CSVReader reader= new CSVReader(file);
@@ -200,9 +210,17 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         }
         return listequestion;
     }
+
+    /**
+     * Lance une partie dans le mode Multi V1 avec le thème, la difficulté et le nombre de questions choisis
+     * @param themes themes choisis
+     * @param difficulte difficulté choisie
+     * @param nombrequestions nombre de questions choisi
+     */
     public void lanceJeuV1(ArrayList<String> themes,String difficulte,int nombrequestions){
         ArrayList<Question> listequestion = new ArrayList<>();
         Iterator<String> iterator = themes.iterator();
+        //On utilise un while pour parcourir la liste des thèmes et récupérer les questions associées
         while (iterator.hasNext()) {
             String theme = iterator.next();
             try {
@@ -212,20 +230,32 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
                 throw new RuntimeException(ex);
             }
         }
+        //On mélange la liste de toutes les questions obtenues
         Collections.shuffle(listequestion);
+        //On rempli la liste destinée à l'équipe A en prenant les n premières questions
         List<Question> sublistA = listequestion.subList(0, nombrequestions);
         ArrayList<Question> nouvellelisteA = new ArrayList<>(sublistA);
+        //On rempli la liste destinée à l'équipe B en prenant les n questions suivantes
         List<Question> sublistB = listequestion.subList(nombrequestions, nombrequestions*2);
         ArrayList<Question> nouvellelisteB = new ArrayList<>(sublistB);
         String[] themesjeu = new String[themes.size()];
         themes.toArray(themesjeu);
+        //On lance la partie
         Partie partie = new Partie("Jeu Duo", difficulte, themesjeu, nombrequestions);
         new JeuMultiv1(nouvellelisteA,nouvellelisteB, 0, 0,fieldEquipeA.getText(),fieldEquipeB.getText(),false,false,0,"",partie);
         CARD.show(CONTAINER, "JeuMulti");
     }
+
+    /**
+     * Lance une partie dans le mode Multi V1 avec le thème, la difficulté et le nombre de questions choisis
+     * @param themes thème choisi
+     * @param difficulte difficulté choisie
+     * @param nombrequestions nombre de questions choisi
+     */
     public void lanceJeuV2(ArrayList<String> themes,String difficulte,int nombrequestions){
         ArrayList<Question> listequestion = new ArrayList<>();
         Iterator<String> iterator = themes.iterator();
+        //On utilise un while pour parcourir la liste des thèmes et récupérer les questions associées
         while (iterator.hasNext()) {
             String theme = iterator.next();
             try {
@@ -235,11 +265,14 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
                 throw new RuntimeException(ex);
             }
         }
+        //On mélange la liste de toutes les questions obtenues
         Collections.shuffle(listequestion);
+        //On rempli la liste destinée à la partie en prenant les 2n premières questions de la liste
         List<Question> sublist = listequestion.subList(0, nombrequestions*2);
         ArrayList<Question> nouvelleliste = new ArrayList<>(sublist);
         String[] themesjeu = new String[themes.size()];
         themes.toArray(themesjeu);
+        //On lance la partie
         Partie partie = new Partie("Jeu Duo", difficulte, themesjeu, nombrequestions);
         new JeuMultiv2(nouvelleliste, 0, 0,fieldEquipeA.getText(),fieldEquipeB.getText(),0,"",partie);
         CARD.show(CONTAINER, "JeuMulti");

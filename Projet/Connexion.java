@@ -186,8 +186,8 @@ public class Connexion implements Graphique{
 
     /**
      * Change le label réponse
-     * @param text
-     * @param color
+     * @param text text choisi pour le label
+     * @param color couleur choisie pour le label
      */
     public void setLabelErreur(String text,Color color){
         labelErreur.setText(text);

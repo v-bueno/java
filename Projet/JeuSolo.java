@@ -144,7 +144,7 @@ public class JeuSolo implements Graphique, ActionListener  {
     }
 
     /**
-     *
+     * action réalisée lors d'un appui sur bouton
      * @param e the event to be processed
      */
     public void actionPerformed(ActionEvent e){

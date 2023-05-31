@@ -81,7 +81,7 @@ public class MenuPrincipal implements Graphique{
             espaceAdministrateur.setVisible(false);
             statistiques.setVisible(true);
         }
-
+        //action à réaliser lors d'un appui sur jeuSolo : redirection vers ChoixJeuSolo
         jeuSolo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,7 +90,7 @@ public class MenuPrincipal implements Graphique{
                 CARD.show(CONTAINER,"choixjeu");
             }
         });
-
+        //action à réaliser lors d'un appui sur jeuDuo : redirection vers ChoixJeuMulti
         jeuDuo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,7 +98,7 @@ public class MenuPrincipal implements Graphique{
                 CARD.show(CONTAINER,"choixjeumulti");
             }
         });
-
+        //action à réaliser lors d'un appui sur espaceAdministrateur : redirection vers EspaceAdministrateur
         espaceAdministrateur.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 labelErreur.setVisible(false);
@@ -106,7 +106,7 @@ public class MenuPrincipal implements Graphique{
                 CARD.show(CONTAINER, "espaceadmin");
             }
         });
-
+        //action à réaliser lors d'un appui sur statistiques : apparition d'un pop-up
         statistiques.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,7 +114,7 @@ public class MenuPrincipal implements Graphique{
                 new Statistiques();
             }
         });
-
+        //action à réaliser lors d'un appui sur deconnexion : redirection vers Connexion
         deconnexion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -193,7 +193,7 @@ public class MenuPrincipal implements Graphique{
 
         //Ajoute le panel au container afin d'afficher cette page quand on le souhaite
         CONTAINER.add(menuprincipal, "menuprincipal");
-
+        //action à réaliser lors d'un appui sur rejouer : redirection vers JeuSolo
         rejouer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

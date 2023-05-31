@@ -19,12 +19,12 @@ public class FinJeuMulti implements Graphique{
     /**
      * Créé une interface qui peut être affiché résumant la partie qui vient de se dérouler et qui permet de rejouer dans les
      * mêmes conditions ou de retourner au menu principal
-     * @param scoreA
-     * @param scoreB
-     * @param nomEquipeA
-     * @param nomEquipeB
-     * @param version
-     * @param partie
+     * @param scoreA score de l'équipe A
+     * @param scoreB score de l'équipe B
+     * @param nomEquipeA nom de l'équipe A
+     * @param nomEquipeB nom de l'équipe B
+     * @param version version du mode multijoueur V1 ou V2
+     * @param partie partie venant d'être jouée
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -121,8 +121,8 @@ public class FinJeuMulti implements Graphique{
 
     /**
      * Modifie le label réponse
-     * @param texte
-     * @param couleur
+     * @param texte texte à écrire
+     * @param couleur couleur du texte
      */
     public void setLabelReponse(String texte,Color couleur){
         labelReponse.setText(texte);

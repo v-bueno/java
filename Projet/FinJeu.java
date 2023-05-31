@@ -82,11 +82,11 @@ public class FinJeu implements Graphique {
 
     /**
      * Ajoute la partie via les paramètres à Partie.csv
-     * @param utilisateur
-     * @param themes
-     * @param difficulte
-     * @param nombreQuestions
-     * @param score
+     * @param utilisateur utilisateur qui a joué la partie
+     * @param themes thèmes choisis pour la partie
+     * @param difficulte difficulté choisie pour la partie
+     * @param nombreQuestions nombre de questions choisi pour la partie
+     * @param score score final obtenu par le joueur
      */
     public void ajouteCSV(String utilisateur, String[] themes,String difficulte,int nombreQuestions, int score){
         try {
@@ -125,7 +125,7 @@ public class FinJeu implements Graphique {
         File file= new File("Sound.wav");
         try {
             //Permet de jouer le son
-            AudioInputStream ais= AudioSystem.  getAudioInputStream(file);
+            AudioInputStream ais= AudioSystem. getAudioInputStream(file);
             clip= AudioSystem.getClip();
             clip.open(ais);
             clip.start();
@@ -138,8 +138,8 @@ public class FinJeu implements Graphique {
 
     /**
      * Modifie le label réponse
-     * @param texte
-     * @param couleur
+     * @param texte texte à écrire
+     * @param couleur couleur du texte
      */
     public void setLabelReponse(String texte,Color couleur){
         labelReponse.setText(texte);

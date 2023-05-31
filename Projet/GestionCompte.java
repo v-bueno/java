@@ -184,6 +184,12 @@ public class GestionCompte implements Graphique{
         });
     }
     //Modifie le labelErreur
+
+    /**
+     * Modifie le texte du labelErreur
+     * @param text texte à écrire
+     * @param color couleur du texte
+     */
     public void setLabelErreur(String text,Color color){
         labelErreur.setText(text);
         labelErreur.setForeground(color);

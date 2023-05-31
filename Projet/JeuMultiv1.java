@@ -45,6 +45,10 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
      * @param questionsB liste de questions restantes de l'équipe B
      * @param scoreA score en cours de l'équipe A
      * @param scoreB score en cours de l'équipe B
+     * @param nomEquipeA nom de l'équipe A
+     * @param nomEquipeB nom de l'équipe B
+     * @param equipeAFinie booléen qui indique si l'équipe A a répondu à toutes ses questions
+     * @param equipeBFinie booléen qui indique si l'équipe B a répondu à toutes ses questions
      * @param equipeDuTour échange entre 0 et 1 à chaque appel afin de déterminer l'équipe qui doit jouer
      * @param derniereReponse réponse de la question en cours
      * @param partie partie permettant de connaître les paramètres et de pouvoir rejouer avec les mêmes par la suite
@@ -85,7 +89,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
             @Override
             public void run() {
                 if (tempsRestant==1) { //S'il n'y a plus de temps pour répondre
-                    if(listequestionsA.size()!=1) { //S'il n'y a plus de questions après
+                    if(listequestionsA.size()!=1) { //S'il y a des questions après
                         //Définie les paramètres
                         String derniereReponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                         listequestionsA.remove(0);
@@ -99,9 +103,14 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                             new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, derniereReponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était " + derniereReponse, Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
+                        //on éteint le chrono car le temps est écoulé
                         chrono.cancel();
-                    }else{
+                    }
+                    //Sinon il n'y a plus de questions
+                    else{
+                        //on indique que l'équipe A a fini
                         equipeAFinie=true;
+                        //Si l'équipe B a déjà fini on met fin à la partie
                         if (equipeBFinie) {
                             try {
                                 //Le jeu s'arrête
@@ -114,15 +123,18 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                                 throw new RuntimeException(e);
                             }
                         }
+                        //Sinon c'est à l'équipe A de jouer
                         else{
                             String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                             new JeuMultiv1(listequestionsA,listequestionsB, scoreA,scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie,equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Temps écoulé ! La bonne réponse était "+dernierereponse,Color.orange);
                             CARD.show(CONTAINER, "JeuMulti");
+                            //on éteint le chrono, le temps est écoulé
                             chrono.cancel();
 
                         }
                     }
                 }
+                //Sinon le temps n'est pas écoulé on décrémente le temps restant de 1 seconde
                 else{
                     tempsRestant-=1;
                     labelTempsRestant.setText("Temps Restant : "+tempsRestant);
@@ -197,7 +209,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         bouton3.getBouton().addActionListener(this);
         bouton4.getBouton().addActionListener(this);
 
-
+        //On lance le chrono avec une période de 1 seconde
         chrono.schedule(timeOutTask,1000,1000);
 
     }
@@ -323,17 +335,24 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
 
     }
     /**
-     *
+     * Action effectuée lors d'un appui du bouton, le score est modifié selon la réponse et un appel récursif au jeu
+     * est effectué, l'équipe qui doit jouer au prochain tour est décidée selon si l'équipe actuelle a bien ou mal
+     * répondu et selon si la prochaine équipe à jouer a encore des questions dans sa liste.
      * @param e the event to be processed
      */
     public void actionPerformed(ActionEvent e){
+        //Si c'est à l'équipe A de jouer
         if (equipeDuTour == 0) {
+            //On vérifie que c'est la bonne réponse
             if (e.getSource() == boutons[listequestionsA.get(0).getBonnereponse() - 1].getBouton()) {
+                //Si c'est la dernière question de la liste de l'équipe A
                 if (listequestionsA.size() == 1) {
+                    //On indique que l'équipe A a fini, on met à jour le score et on enregistre la bonne réponse
                     equipeAFinie = true;
                     scoreA = scoreA + listequestionsA.get(0).getPoints();
                     partie.setScore(scoreA);
                     String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
+                    //Puis si l'équipe B a déjà répondue à toutes ses questions on met fin à la partie
                     if (equipeBFinie) {
                         try {
                             new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Bonne réponse !", Color.green);
@@ -345,11 +364,13 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         }
                         CARD.show(CONTAINER, "FinJeu");
                     }
+                    //Sinon comme l'équipe A a fini on fait jouer l'équipe B
                     else {
                         new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
                 }
+                //Sinon, l'équipe A a encore des questions à jouer, on refait jouer l'équipe A après mise à jour du score
                 else {
                     String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                     scoreA = scoreA + listequestionsA.get(0).getPoints();
@@ -357,7 +378,10 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
                     CARD.show(CONTAINER, "JeuMulti");
                 }
-            } else {
+            }
+            //Si l'équipe A s'est trompée
+            else {
+                //Si c'était la dernière question de l'équipe A, on indique que l'équipe A a fini, on met à jour le score, on enregistre la derniere reponse et on réduit la liste de questions
                 if (listequestionsA.size() == 1) {
                     equipeAFinie=true;
                     String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
@@ -366,6 +390,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         scoreA = 0;
                     }
                     partie.setScore(scoreA);
+                    //Si l'équipe B à fini on met fin à la partie
                     if (equipeBFinie) {
                         try {
                             new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1], Color.red);
@@ -377,12 +402,13 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         }
                         CARD.show(CONTAINER, "FinJeu");
                     }
+                    //Sinon il faut donner la main à l'équipe B pour qu'elle finisse sa liste
                     else{
                         new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
                 }
-
+                //Si l'équipe A a mal répondu on met à jour le score, on enregistre la réponse valide de la question et on réduit la liste de questions
                 else {
                     scoreA = scoreA + listequestionsA.get(0).getMalus();
                     if (scoreA < 0) {
@@ -390,10 +416,12 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     }
                     String dernierereponse = listequestionsA.get(0).getReponses()[listequestionsA.get(0).getBonnereponse() - 1];
                     listequestionsA.remove(0);
+                    //Si l'équipe B n'a pas fini on laisse l'équipe B jouer car c'est son tour
                     if (!(equipeBFinie)) {
                         new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
+                    //Sinon on refait jouer l'équipe A pour qu'elle finisse sa liste
                     else{
                         new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                         CARD.show(CONTAINER, "JeuMulti");
@@ -401,13 +429,18 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                 }
             }
         }
+        //Sinon c'est au tour de l'équipe B.
         else{
+            //On vérifie que c'est la bonne réponse
             if (e.getSource() == boutons[listequestionsB.get(0).getBonnereponse() - 1].getBouton()) {
+                //Si c'est la dernière question de la liste de l'équipe B
                 if (listequestionsB.size() == 1) {
+                    //On indique que l'équipe B a fini, on met à jour le score et on enregistre la bonne réponse
                     equipeBFinie=true;
                     scoreB = scoreB + listequestionsB.get(0).getPoints();
                     partie.setScore(scoreB);
                     String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
+                    //Si l'équipe A a fini on met fin à la partie
                     if(equipeAFinie) {
                         try {
                             new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Bonne réponse !", Color.green);
@@ -419,11 +452,15 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                         }
                         CARD.show(CONTAINER, "FinJeu");
                     }
+                    //Sinon on laisse l'équipe A finir sa liste de questions
                     else{
                         new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Bonne réponse !", Color.green);
                         CARD.show(CONTAINER, "JeuMulti");
                     }
-                } else {
+                }
+                //Sinon il reste des questions dans la liste de l'équipe B et elle a bien répondu, elle doit donc rejouer
+                else {
+                    //On met à jour le score, on enregistre la bonne réponse et on réduit la liste de question puis on fait rejouer l'équipe B
                     String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                     scoreB = scoreB + listequestionsB.get(0).getPoints();
                     listequestionsB.remove(0);
@@ -431,8 +468,11 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     CARD.show(CONTAINER, "JeuMulti");
                 }
             }
+            //Sinon l'équipe B s'est trompée.
             else{
+                    //Si c'était la dernière question de l'équipe B
                     if (listequestionsB.size() == 1) {
+                        //On indique que l'équipe B a fini, on met à jour le score, on enregistre la bonne réponse et on réduit la taille de la liste
                         equipeBFinie=true;
                         String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                         scoreB = scoreB + listequestionsB.get(0).getMalus();
@@ -440,6 +480,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                             scoreB = 0;
                         }
                         partie.setScore(scoreB);
+                        //Si l'équipe A a déjà fini on met fin à la partie
                         if (equipeAFinie) {
                             try {
                                 new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1], Color.red);
@@ -451,21 +492,27 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                             }
                             CARD.show(CONTAINER, "FinJeu");
                         }
+                        //Sinon on laisse l'équipe A finir sa liste de questions
                         else {
                             new JeuMultiv1(listequestionsA,listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
-                    } else {
+                    }
+                    //Sinon il reste des questions dans la liste de l'équipe B
+                    else {
+                        //On met à jour le score, on enregistre la bonne réponse et on réduit la liste de questions
                         scoreB = scoreB + listequestionsB.get(0).getMalus();
                         if (scoreB < 0) {
                             scoreB = 0;
                         }
                         String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                         listequestionsB.remove(0);
+                        //Si l'équipe A n'a pas fini, c'est a son tour donc on la laisse jouer
                         if (!(equipeAFinie)) {
                             new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuProchainTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                             CARD.show(CONTAINER, "JeuMulti");
                         }
+                        //Sinon l'équipe B rejoue, elle doit finir sa liste
                         else{
                             new JeuMultiv1(listequestionsA, listequestionsB, scoreA, scoreB,nomEquipeA,nomEquipeB,equipeAFinie,equipeBFinie, equipeDuTour, dernierereponse, partie).setLabelReponse("Mauvaise réponse ! La bonne réponse était " + dernierereponse, Color.red);
                             CARD.show(CONTAINER, "JeuMulti");
@@ -473,8 +520,15 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     }
                 }
             }
+        //On éteint le chrono car l'équipe a répondu avant la fin de celui-ci
         chrono.cancel();
     }
+
+    /**
+     * Change le texte affiché dans le labelReponse
+     * @param text texte à afficher
+     * @param color couleur du texte
+     */
     public void setLabelReponse(String text,Color color){
         labelReponse.setText(text);
         labelReponse.setForeground(color);

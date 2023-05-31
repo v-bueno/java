@@ -22,14 +22,14 @@ public class Question {
 
     /**
      *
-     * @param question
-     * @param reponses
-     * @param theme
-     * @param difficulte
-     * @param temps
-     * @param points
-     * @param bonnereponse
-     * @param malus
+     * @param question écnoncé de la question
+     * @param reponses liste des réponses
+     * @param theme thème de la question
+     * @param difficulte difficulté de la question
+     * @param temps temps limite pour répondre à la question
+     * @param points nombre de points attirbués pour une bonne réponse
+     * @param bonnereponse place de la bonne réponse dans le tableau des réponses
+     * @param malus nombre de points retirés en cas de mauvaise réponse
      */
     public Question(String question,
                     String[] reponses,
@@ -55,72 +55,136 @@ public class Question {
     public Question() {
     }
 
+    /**
+     *
+     * @return
+     */
     public String getQuestion() {
         return question;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] getReponses() {
         return reponses;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTheme() {
         return theme;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDifficulte() {
         return difficulte;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTemps() {
         return temps;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getBonnereponse() {
         return bonnereponse;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMalus() {
         return malus;
     }
 
+    /**
+     *
+     * @param question
+     */
     public void setQuestion(String question) {
         this.question = question;
     }
 
+    /**
+     *
+     * @param reponses
+     */
     public void setReponses(String[] reponses) {
         this.reponses = reponses;
     }
 
+    /**
+     *
+     * @param theme
+     */
     public void setTheme(String theme) {
         this.theme = theme;
     }
 
+    /**
+     *
+     * @param difficulte
+     */
     public void setDifficulte(String difficulte) {
         this.difficulte = difficulte;
     }
 
+    /**
+     *
+     * @param temps
+     */
     public void setTemps(int temps) {
         this.temps = temps;
     }
 
+    /**
+     *
+     * @param points
+     */
     public void setPoints(int points) {
         this.points = points;
     }
 
+    /**
+     *
+     * @param bonnereponse
+     */
     public void setBonnereponse(int bonnereponse) {
         this.bonnereponse = bonnereponse;
     }
 
+    /**
+     *
+     * @param malus
+     */
     public void setMalus(int malus) {
         this.malus = malus;
     }
 
     /**
-     *
+     * Ajoute la question dans Question.csv
      */
     public void ajouteCSV(){
         try {
@@ -137,7 +201,7 @@ public class Question {
             // Ajouter les objets dans le fichier CSV
             String [] nouvelleReponses=new String[4];
             for(int i=0;i<4;i++) {
-                nouvelleReponses[i]=this.getReponses()[i].replace(",",";").replace('"',' ');;
+                nouvelleReponses[i]=this.getReponses()[i].replace(",",";").replace('"','\'');;
             }
 
             writer.append(nouvelleQuestion);

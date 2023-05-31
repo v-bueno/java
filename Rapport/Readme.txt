@@ -29,9 +29,9 @@ Avant de compiler et d'exécuter le projet, assurez-vous d'avoir téléchargé e
 Maintenant, la bibliothèque OpenCSV est ajoutée à votre projet IntelliJ IDEA et vous pouvez l'utiliser pour lire et écrire des fichiers CSV.
 
 ## Informations Utiles aux Tests
-Pour les tests du projet, deux fichiers CSV sont nécessaires : `Parties.csv` et `Questions.csv`. Assurez-vous que ces fichiers sont présents dans le répertoire du projet et ne sont pas supprimés. Vous pouvez les recréer avec des en-têtes vides si nécessaire.
+Pour les tests du projet, deux fichiers CSV sont nécessaires : `Parties.csv` et `Questions.csv`. Assurez-vous que ces fichiers sont présents dans le répertoire du projet et ne sont pas supprimés. Vous pouvez les recréer avec les bonnes en-têtes si nécessaire.
 
-**Note importante :** Le fichier `Compte.data` n'est pas inclus dans le dépôt initial. Cependant, il sera automatiquement créé lors de la création de votre premier compte.
+Note importante : Le fichier `Compte.data` n'est pas inclus dans le dépôt initial. Cependant, il sera automatiquement créé lors de la création de votre premier compte.
 
 Veillez à prendre en compte ces informations lors de l'exécution des tests pour vous assurer que les fichiers requis sont présents et que le fichier `Compte.data` est généré correctement.
 

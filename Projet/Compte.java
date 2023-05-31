@@ -9,6 +9,9 @@ public class Compte implements Serializable {
     private ArrayList<Partie> historique;
     private String type;
     private Boolean suspendu;
+    private int nombreReponses;
+    private int nombreQuestions;
+    private int nombreParties;
 
     /**
      *
@@ -17,6 +20,9 @@ public class Compte implements Serializable {
     public Compte(String identifiant) {
         this.identifiant = identifiant;
         this.historique=new ArrayList<>();
+        this.nombreReponses=0;
+        this.nombreQuestions=0;
+        this.nombreParties=0;
     }
 
     /**
@@ -28,6 +34,9 @@ public class Compte implements Serializable {
         this.identifiant = identifiant;
         this.motdepasse = motdepasse;
         this.historique=new ArrayList<>();
+        this.nombreReponses=0;
+        this.nombreQuestions=0;
+        this.nombreParties=0;
     }
 
     /**
@@ -45,6 +54,9 @@ public class Compte implements Serializable {
         this.type = type;
         this.suspendu = suspendu;
         this.historique=new ArrayList<>();
+        this.nombreReponses=0;
+        this.nombreQuestions=0;
+        this.nombreParties=0;
     }
 
 
@@ -104,6 +116,18 @@ public class Compte implements Serializable {
         this.type = type;
     }
 
+    public void setNombreReponses(int nombreReponses) {
+        this.nombreReponses = nombreReponses;
+    }
+
+    public void setNombreQuestions(int nombreQuestions) {
+        this.nombreQuestions = nombreQuestions;
+    }
+
+    public void setNombreParties(int nombreParties) {
+        this.nombreParties = nombreParties;
+    }
+
     /**
      *
      * @return Renvoie l'identifiant du compte.
@@ -144,6 +168,18 @@ public class Compte implements Serializable {
         return suspendu;
     }
 
+    public int getNombreReponses() {
+        return nombreReponses;
+    }
+
+    public int getNombreQuestions() {
+        return nombreQuestions;
+    }
+
+    public int getNombreParties() {
+        return nombreParties;
+    }
+
     /**
      *
      * @return Renvoie l'objet convertit en String.
@@ -159,6 +195,15 @@ public class Compte implements Serializable {
                 '}';
     }
 
+    public void incrementeNombreQuestion(){
+        this.nombreQuestions=nombreQuestions+1;
+    }
+    public void incrementeNombreReponses(){
+        this.nombreReponses=nombreReponses+1;
+    }
+    public void incrementeNombreParties(){
+        this.nombreParties=nombreParties+1;
+    }
 
     /**
      *

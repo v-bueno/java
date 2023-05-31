@@ -12,25 +12,25 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ChoixJeuMulti implements Graphique,ActionListener {
-    JCheckBox theme1 = new JCheckBox("Sport");
-    JCheckBox theme2 = new JCheckBox("Musique");
-    JCheckBox theme3 = new JCheckBox("Géographie");
-    JCheckBox theme4 = new JCheckBox("Cinéma");
-    String[] difficultes = {"Facile", "Normal", "Difficile"};
-    JCheckBox[] themes= {theme1,theme2,theme3,theme4};
-    JComboBox difficultecombobox= new JComboBox(difficultes);
-    String[] init={"Aucune"};
+    private JCheckBox theme1 = new JCheckBox("Sport");
+    private JCheckBox theme2 = new JCheckBox("Musique");
+    private JCheckBox theme3 = new JCheckBox("Géographie");
+    private JCheckBox theme4 = new JCheckBox("Cinéma");
+    private String[] difficultes = {"Facile", "Normal", "Difficile"};
+    private JCheckBox[] themes= {theme1,theme2,theme3,theme4};
+    private JComboBox difficultecombobox= new JComboBox(difficultes);
+    private String[] init={"Aucune"};
 
 
-    JComboBox nombrequestioncombobox= new JComboBox(init);
-    JButton jouerV1 = new JButton("Jouer à la V1!");
-    JButton jouerV2 = new JButton("Jouer à la V2!");
-    JLabel labelnombrequestion;
-    JLabel labelErreur = new JLabel("Sélectionnez un nombre");
-    JLabel labelEquipeA=new JLabel("Nom de l'équipe A");
-    JLabel labelEquipeB=new JLabel("Nom de l'équipe B");
-    JTextField fieldEquipeA=new JTextField();
-    JTextField fieldEquipeB=new JTextField();
+    private JComboBox nombrequestioncombobox= new JComboBox(init);
+    private JButton jouerV1 = new JButton("Jouer à la V1!");
+    private JButton jouerV2 = new JButton("Jouer à la V2!");
+    private JLabel labelnombrequestion;
+    private JLabel labelErreur = new JLabel();
+    private JLabel labelEquipeA=new JLabel("Nom de l'équipe A");
+    private JLabel labelEquipeB=new JLabel("Nom de l'équipe B");
+    private JTextField fieldEquipeA=new JTextField("Équipe A");
+    private JTextField fieldEquipeB=new JTextField("Équipe B");
 
 
 
@@ -43,7 +43,6 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
         JLabel labeldifficulte=new JLabel("Difficulté :");
         labelnombrequestion= new JLabel("Nombre de questions chacun :");
         labelErreur.setForeground(Color.red);
-        labelErreur.setVisible(false);
         gbc.fill=GridBagConstraints.HORIZONTAL;
         gbc.gridx=0;
         gbc.gridy=0;
@@ -108,8 +107,11 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(((String)nombrequestioncombobox.getSelectedItem()).equals("Aucune")) {
-                    labelErreur.setVisible(true);
-                }else {
+                    labelErreur.setText("Sélectionner un nombre de questions");
+                }else if(fieldEquipeA.getText().equals("")||fieldEquipeB.getText().equals("")||fieldEquipeA.getText().equals(fieldEquipeB.getText())){
+                    labelErreur.setText("Problème de nom d'équipe");
+                }
+                else {
                     ArrayList<String> themeselectionnes = new ArrayList<>();
                     for (JCheckBox theme : themes) {
                         if (theme.isSelected()) {
@@ -127,8 +129,11 @@ public class ChoixJeuMulti implements Graphique,ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(((String)nombrequestioncombobox.getSelectedItem()).equals("Aucune")) {
-                    labelErreur.setVisible(true);
-                }else {
+                    labelErreur.setText("Sélectionner un nombre de questions");
+                }else if(fieldEquipeA.getText().equals("")||fieldEquipeB.getText().equals("")||fieldEquipeA.getText().equals(fieldEquipeB.getText())){
+                    labelErreur.setText("Problème de nom d'équipe");
+                }
+                else {
                     ArrayList<String> themeselectionnes = new ArrayList<>();
                     for (JCheckBox theme : themes) {
                         if (theme.isSelected()) {

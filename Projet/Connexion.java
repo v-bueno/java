@@ -8,6 +8,7 @@ import java.io.*;
 public class Connexion implements Graphique{
 
     public static Compte compteUtilise;
+    public static JMenuBar menuBar;
     private JLabel labelErreur=new JLabel();
     /**
      *
@@ -25,19 +26,23 @@ public class Connexion implements Graphique{
         //On crée un menu que nous allons ajouter à la fenêtre
         JMenu partieSolo=new JMenu("Partie Solo");
         JMenu partieDuo=new JMenu("Partie en équipe");
+        JMenu statitiques=new JMenu("Statistiques");
         JMenu aide=new JMenu("Aide");
         JMenuItem jouerSolo=new JMenuItem("Jouer");
         JMenuItem jouerDuo=new JMenuItem("Jouer");
         JMenuItem menuprincipal=new JMenuItem("Menu principal");
         JMenuItem deconnexion=new JMenuItem("Se déconnecter");
-        JMenuBar menuBar=new JMenuBar();
+        JMenuItem itemStatistiques=new JMenuItem("Voir vos stats");
+        menuBar=new JMenuBar();
         menuBar.add(partieSolo);
         menuBar.add(partieDuo);
         menuBar.add(aide);
+        menuBar.add(statitiques);
         partieSolo.add(jouerSolo);
         partieDuo.add(jouerDuo);
         aide.add(menuprincipal);
         aide.add(deconnexion);
+        statitiques.add(itemStatistiques);
         FRAME.setJMenuBar(menuBar);
         menuBar.setVisible(false); // Ce menu est invisible tant que l'utilisateur n'est pas connecté
 
@@ -60,6 +65,7 @@ public class Connexion implements Graphique{
 
         //Le JMenuItem menuprincipal permet de revenir au menu principal
         menuprincipal.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 CARD.show(CONTAINER,"menuprincipal");
@@ -72,6 +78,12 @@ public class Connexion implements Graphique{
             public void actionPerformed(ActionEvent e) {
                 CARD.show(CONTAINER,"connexion"); //Affiche la page "connexion" enregistrée
                 menuBar.setVisible(false); //La menuBar est invisible car on se déconnecte
+            }
+        });
+        itemStatistiques.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Statistiques();
             }
         });
 

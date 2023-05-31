@@ -52,6 +52,10 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
         this.nomEquipeA=nomEquipeA;
         this.nomEquipeB=nomEquipeB;
         equipeDuProchainTour=(equipeDuTour+1)%2;
+
+        Connexion.menuBar.setVisible(false); //pour ne pas avoir de probleme avec le timer et un nouvel appel de fonction
+
+
         chrono = new Timer(true);
         tempsRestant = questions.get(0).getTemps();
         TimerTask timeOutTask = new TimerTask() {
@@ -188,7 +192,7 @@ public class JeuMultiv2 implements Graphique, ActionListener  {
                     scoreB = scoreB + listequestions.get(0).getPoints();
                     partie.setScore(scoreB);
                     try {
-                        new FinJeuMulti(scoreA,scoreB,nomEquipeA,nomEquipeB,2,partie).setLabelReponse("Bonne réponse !", Color.red);
+                        new FinJeuMulti(scoreA,scoreB,nomEquipeA,nomEquipeB,2,partie).setLabelReponse("Bonne réponse !", Color.green);
                         ;
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);

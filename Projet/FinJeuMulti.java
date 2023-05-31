@@ -20,8 +20,10 @@ public class FinJeuMulti implements Graphique{
         this.scoreA = scoreA;
         this.scoreB = scoreB;
         this.partie=partie;
+        Connexion.menuBar.setVisible(true); //on réaffiche le menu
+
         JLabel label;
-        JLabel labelScoreFinal=new JLabel("Score équipe "+nomEquipeA+" : "+scoreA+" et score équipe "+nomEquipeB+" : " +scoreB);
+        JLabel labelScoreFinal=new JLabel("Score équipe "+nomEquipeA+" : "+scoreA+" et Score équipe "+nomEquipeB+" : " +scoreB);
         if (scoreA<scoreB) {
             label = new JLabel("FIN ! L'équipe "+nomEquipeB+" l'emporte !");
         }

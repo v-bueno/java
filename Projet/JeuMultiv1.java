@@ -65,7 +65,11 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
         else{
             joueEquipeB();
         }
+        Connexion.menuBar.setVisible(false); //pour ne pas avoir de probleme avec le timer et un nouvel appel de fonction
+
     }
+
+
 
     public void joueEquipeA(){
         this.equipeDuProchainTour=(equipeDuTour+1)%2;
@@ -393,7 +397,7 @@ public class JeuMultiv1 implements Graphique, ActionListener  {
                     String dernierereponse = listequestionsB.get(0).getReponses()[listequestionsB.get(0).getBonnereponse() - 1];
                     if(equipeAFinie) {
                         try {
-                            new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Bonne réponse !", Color.red);
+                            new FinJeuMulti(scoreA, scoreB, nomEquipeA,nomEquipeB,1,partie).setLabelReponse("Bonne réponse !", Color.green);
                             ;
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);

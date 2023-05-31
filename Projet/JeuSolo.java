@@ -41,6 +41,8 @@ public class JeuSolo implements Graphique, ActionListener  {
         this.partie=partie;
         this.listequestions=questions;
 
+        Connexion.menuBar.setVisible(false); //pour ne pas avoir de probleme avec le timer et un nouvel appel de fonction
+
         chrono = new Timer(true);
         tempsRestant = questions.get(0).getTemps();
         TimerTask timeOutTask = new TimerTask() {
@@ -137,9 +139,11 @@ public class JeuSolo implements Graphique, ActionListener  {
      * @param e the event to be processed
      */
     public void actionPerformed(ActionEvent e){
+        Connexion.compteUtilise.incrementeNombreQuestion();
         if(e.getSource()==boutons[listequestions.get(0).getBonnereponse()-1].getBouton()){
             if(listequestions.size()==1){
                 score=score+listequestions.get(0).getPoints();
+                Connexion.compteUtilise.incrementeNombreReponses();
                 partie.setScore(score);
                 Connexion.compteUtilise.ajoutePartie(partie);
                 try {
@@ -151,6 +155,7 @@ public class JeuSolo implements Graphique, ActionListener  {
                 }
                 CARD.show(CONTAINER,"FinJeu");
             }else {
+                Connexion.compteUtilise.incrementeNombreReponses();
                 String dernierereponse=listequestions.get(0).getReponses()[listequestions.get(0).getBonnereponse()-1];
                 score=score+listequestions.get(0).getPoints();
                 listequestions.remove(0);

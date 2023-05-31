@@ -26,6 +26,7 @@ public class MenuPrincipal implements Graphique{
         JButton jeuSolo = new JButton("Jeu solo");
         JButton jeuDuo = new JButton("Jeu en équipe");
         JButton espaceAdministrateur = new JButton("Espace Admin");
+        JButton statistiques=new JButton("Statistiques");
         JButton deconnexion=new JButton("Déconnexion");
         JLabel label= new JLabel("Historique de vos parties");
         JLabel label10Derniere=new JLabel("10 dernières parties");
@@ -33,6 +34,7 @@ public class MenuPrincipal implements Graphique{
         JLabel labelErreur=new JLabel("Sélectionner une seule partie");
         labelErreur.setForeground(Color.red);
         labelErreur.setVisible(false);
+        statistiques.setVisible(false);
 
 
         ArrayList<Partie> historique=Connexion.compteUtilise.getHistorique();
@@ -73,9 +75,11 @@ public class MenuPrincipal implements Graphique{
         JScrollPane scrollPane2=new JScrollPane(table2);
 
         /* Si le compte connecté n'est pas administrateur le bouton permettant
-        d'accéder à l'espace administrateur n'est pas affiché */
+        d'accéder à l'espace administrateur n'est pas affiché et on lui met un bouton statistiques pour
+         gard un affichage correct, l'administrateur lui pourra y accéder via le JMenu*/
         if(Connexion.compteUtilise.getType().equals("Joueur")){
             espaceAdministrateur.setVisible(false);
+            statistiques.setVisible(true);
         }
 
         jeuSolo.addActionListener(new ActionListener() {
@@ -100,6 +104,14 @@ public class MenuPrincipal implements Graphique{
                 labelErreur.setVisible(false);
                 new EspaceAdministrateur();
                 CARD.show(CONTAINER, "espaceadmin");
+            }
+        });
+
+        statistiques.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                labelErreur.setVisible(false);
+                new Statistiques();
             }
         });
 
@@ -130,6 +142,7 @@ public class MenuPrincipal implements Graphique{
         gbc.gridx=2;
         gbc.gridy=0;
         menuprincipal.add(espaceAdministrateur,gbc);
+        menuprincipal.add(statistiques,gbc);
 
         gbc.gridx=3;
         gbc.gridy=0;

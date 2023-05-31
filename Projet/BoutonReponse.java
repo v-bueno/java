@@ -7,9 +7,9 @@ import java.util.Timer;
  */
 public class BoutonReponse {
 
-    Timer chrono;
+    public static Timer chrono;
 
-    JButton bouton;
+    private JButton bouton;
 
     /**
      * @param chrono    Timer qui gère le temps restant pour répondre
@@ -26,5 +26,9 @@ public class BoutonReponse {
      */
     public JButton getBouton() {
         return bouton;
+    }
+
+    public Timer getChrono() {
+        return chrono;
     }
 }

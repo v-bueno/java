@@ -24,7 +24,9 @@ public class FinJeu implements Graphique {
      */
     FinJeu(int score) throws IOException, ClassNotFoundException {
         this.score=score;
+        Connexion.menuBar.setVisible(true); //on réaffiche le menu
 
+        Connexion.compteUtilise.incrementeNombreParties();
         JLabel label=new JLabel("FIN ! Votre score est de "+score);
         JButton rejouer= new JButton("Rejouer");
         JButton menuPrincipal= new JButton("Menu Principal");

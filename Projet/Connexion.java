@@ -164,7 +164,7 @@ public class Connexion implements Graphique{
 
                     }
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    setLabelErreur("Identifiant ou mot de passe incorrect",Color.red);
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
